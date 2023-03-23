@@ -1,0 +1,112 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+% Line before the therefore in proofs
+\newcommand{\proofline}{\rule{0.75in}{0.5pt}}
+% For set literals, wraps in {}
+\newcommand{\set}[1]{\{#1\}}
+% Powerset symbol
+\newcommand{\powerset}{\mathcal{P}}
+% Cardinality
+\newcommand{\card}[1]{\lvert #1 \rvert}
+
+\title{More Sets, More Proofs}
+\author{Yash Thakur}
+\date{September 27, 2022}
+
+\begin{document}
+
+\maketitle
+
+\section*{More Sets}
+
+\subsection*{Cardinality}
+
+The number of items in a set.
+
+\begin{enumerate}
+    \item $\card{\set{1, 2, 3, 4, 5}} = 5$
+    \item $\card{\varnothing} = 0$
+    \item $\card{A \cap B} \leq \card A$
+    \item $\card{A \cup B} \leq \card A + \card B$
+\end{enumerate}
+
+\subsection*{Partitions}
+
+A set of nonempty, disjoint subsets which when unioned together is equal to the initial set.
+
+The following are \emph{not} partitions of $A = \set{1,2,3,4,5}$:
+\begin{enumerate}
+    \item $\set{\set{1,2},\set{4,5}}$ (doesn't union together to $A$)
+    \item $\set{\set{1,2,3},\set{3,4,5}}$ (not disjoint)
+    \item $\set{\set{1,2,3,4,5},\varnothing}$ (has an empty set)
+    \item $\set{1,2,3,4,5}$ (not sets, just numbers that happen to be from $A$)
+\end{enumerate}
+
+\subsection*{Powersets}
+
+Powerset $\powerset(A) = \set{S \mid S \subseteq A}$ (set of all subsets of $A$)
+
+$\card{\powerset(A)} = 2^{\card A}$
+
+\subsection*{Cartesian Product}
+
+\subsubsection*{Ordered pairs}
+
+Can represent ordered pair $(a, b)$ as $\set{a, \set{a, b}}$
+
+\textbf{Cartesian product} of $A$ and $B$ is set of all ordered pairs between $A$ and $B$\\
+$A \times B = \set{(a, b) \mid a \in A \land b \in B}$
+
+$(A \times B) \times C$ is not the same as $A \times B \times C$:\\
+$(A \times B) \times C = \set{(u, v) \mid u \in A \times B \land v \in C} = \set{((a1, b1), c1), ((a2, b2), c2), ...}$\\
+$A \times B \times C = \set{(x, y, z) \mid x \in A \land y \in B \land z \in C} = \set{(a1, b1, c1), (a2, b2, c2), ...}$
+
+\section*{More Proofs}
+
+\subsubsection*{Existential Instantiation}
+
+If something exists, you can name it. For example, "$x$ is even" can become:\\
+$k \in Z$\\
+$x = 2k$
+
+\subsection*{Common Mistakes}
+
+\subsubsection*{Arguing from examples}
+
+\subsubsection*{Using the same letter to mean two different things}
+
+\subsubsection*{Jumping to conclusion}
+
+\subsubsection*{Assuming what is to be proved}
+
+\subsubsection*{Confusion between what is known and what is still to be showed}
+
+\subsubsection*{Use of \emph{any} when the correct word is \emph{some}}
+
+\subsubsection*{Misuse of \emph{if}}
+
+\subsection*{Safe Assumptions}
+
+\begin{itemize}
+    \item Closure:
+    \begin{itemize}
+        \item $+, -, *$ on $\mathbf Z$
+        \item $+, *$ on $\mathbf N$
+        \item $+, *$ on $\mathbf N^{>0}$
+        \item $+, -, *$ on $\mathbf R$
+        \item $*, /$ on $\mathbf Q^{\neq 0}$
+        \item $+, -, *$ on $\mathbf Q$
+    \end{itemize}
+    \item $\forall x \in \mathbf Z, x \not\in \mathbf Z^{\text{even}} \Rightarrow x \in \mathbf Z^{\text{odd}}$
+    \item $\forall x \in \mathbf Z, x \not\in \mathbf Z^{\text{odd}} \Rightarrow x \in \mathbf Z^{\text{even}}$
+    \item Unique prime factorization: $\forall n \in \mathbf N^{>1}, \exists!$ set of prime factors when when multiplied together equal $n$
+\end{itemize}
+
+\subsection*{Proof Examples}
+
+\end{document}

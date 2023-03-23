@@ -1,0 +1,528 @@
+\documentclass{article}
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\textwidth}{6in}
+\setlength{\topmargin}{-0.1in}
+\setlength{\textheight}{8.2in}
+
+%%%%%%%%%%%%%  IMPORT MACRO FILES AS NEEDED %%%%%%%%%%%
+\usepackage{amsgen,amsmath,amstext,amsbsy,amsopn,amssymb,amsthm,stackengine}
+\usepackage{array, nicefrac, mathtools}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{float,relsize,setspace,enumitem,pbox,cleveref,multicol,multirow}
+\usepackage{multido}
+\usepackage{bbding} % Has a checkmark symbol reachable through \Checkmark
+\usepackage{tikz,mdframed}
+\usepackage{circuitikz}
+
+% Theorems, definitions, equations, lemmas
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{defn}{Definition}
+\newtheorem{rem}[thm]{Remark}
+\numberwithin{equation}{section}
+\newtheorem*{defn*}{Definition} % Theorem environments with no numbering
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{thm*}{Theorem}
+\theoremstyle{definition}
+\newtheorem*{fact}{Fact}
+
+% For negation and quantifiers in Discrete Math
+\newcommand{\shortsim}{\raise.17ex\hbox{$\scriptstyle \sim$}}
+\renewcommand{\neg}{\shortsim}
+\renewcommand{\nexists}{\neg(\exists}
+\newcommand{\nequiv}{\ensuremath{\not\equiv}}
+
+\newcommand{\myline}[1]{\underline{\hspace{#1}}}
+\newcounter{parts}
+\newcounter{problems}[parts]
+\newcounter{questions}[problems]
+\newcounter{subquestions}[questions]
+\newcommand{\hwpart}[1]{
+	\stepcounter{parts}
+	\noindent\makebox[\textwidth]{\LARGE \bf Part \arabic{parts} - #1}
+	\\
+}
+\newcommand{\problem}[2]{\stepcounter{problems}
+	{\Large \bf \noindent Problem \arabic{problems}: #1 \marginpar{[Total #2 pts]} \\[0.3cm]}}
+\newcommand{\question}[2]{\stepcounter{questions}
+	{\large (\alph{questions}) #1 \marginpar{[#2 pts]} \\[.3cm]}}
+\newcommand{\subquestion}[2]{\stepcounter{subquestions}
+	{\hspace{10pt}\emph{(\roman{subquestions}) #1 \marginpar{[#2 pts]} }\\[.3cm]}}
+
+% Solution formatting
+\newcommand{\solution}[1]{{\color{red}{#1}}}
+% Some standard centering and italicization of text.
+\newcommand{\frontrowcenter}[1]{\begin{center}{\em \Large  #1  }\end{center}}
+
+% A blank page
+\newcommand{\blankpage}{
+	\clearpage
+	\vspace*{\fill}
+	\begin{minipage}{\textwidth}
+		\Large \textbf{THIS PAGE INTENTIONALLY LEFT BLANK}\\
+	\end{minipage}
+	\vfill % equivalent to \vspace{\fill}
+	\clearpage
+}
+
+\newcommand{\answerspace}[1]{
+	\begin{center}
+		\textbf{BEGIN YOUR ANSWER BELOW THIS LINE} \\ \hrulefill \vspace{#1} \\ \hrulefill
+	\end{center}
+}
+
+\newcommand{\answerspacefullpage}{
+	\begin{center}
+		\textbf{BEGIN YOUR ANSWER BELOW THIS LINE} \\ \hrulefill \pagebreak
+	\end{center}
+}
+
+\newcommand{\additionalanswerspace}[1]{
+	\begin{center}
+		\textbf{CONTINUE YOUR ANSWER BELOW THIS LINE } \\ \hrulefill \vspace{#1} \\ \hrulefill
+	\end{center}
+}
+
+\newcommand{\additionalanswerspacefullpage}{
+	\begin{center}
+		\textbf{CONTINUE YOUR ANSWER BELOW THIS LINE} \\ \hrulefill \pagebreak
+	\end{center}
+}
+
+\newcommand{\freespace}[1]{
+	\begin{center}
+		\large \textbf{SCRAP SPACE BELOW} \\
+		\hrulefill
+		\pagebreak
+	\end{center}
+}
+
+% Centered line
+\newcommand{\mycenterline}[1]{
+	\begin{center}
+		\myline{#1}
+	\end{center}
+}
+
+% Space for T/F:
+\newcommand{\tfline}{\myline{.5cm}}
+
+% For quick parenthesized and italicized point annotation.
+\newcommand{\pts}[1]{{\em (#1 pts)}}
+\newcommand{\onept}{{\em (1 pt)}}
+
+% \item environments coupled with a line at the end, for students to write T and F in.
+\newcommand{\tfitem}[1]{\item #1 \null\hfill \framebox(25,25){} \\ \hdashrule{0.95\textwidth}{1pt}{2pt}}
+\newcommand{\setitem}[1]{\tfitem{$\curlybraces{#1}$} }
+\newcommand{\lineitem}[2]{\item #1 \null \hfill \myline{#2}}
+
+% Some circles and squares for students to fill in.
+\newcommand{\whitecircle}[1]{\tikz[baseline=-0.5ex]\draw[black, radius=#1] (0,0) circle ;}
+\newcommand{\whitesquare}[1]{\tikz\draw[black] (0,0) rectangl#1, #1) ;}
+
+% Emphasis
+\newcommand{\F}{$\mathbf{F}$}
+\newcommand{\T}{$\mathbf{T}$}
+\newcommand{\False}{\textbf{False}}
+\newcommand{\false}{\textbf{false}}
+\newcommand{\True}{\textbf{True}}
+\newcommand{\true}{\textbf{true}}
+\newcommand{\makered}[1]{\textcolor{red}{#1}}
+\newcommand{\Rbbst}{\textcolor{red}{Red}-black tree}
+\newcommand{\rbbst}{\textcolor{red}{red}-black tree}
+
+\newcommand{\homeworkdata}[4]{
+	\begin{mdframed}[linewidth=1pt]
+		\noindent\makebox[\textwidth]{\LARGE \bf #1, #2 }
+		\\\\
+		\noindent\makebox[\textwidth]{\Large \bf  Homework \##3 }
+		\\\\
+		\noindent\makebox[\textwidth]{\large \bf  Due: #4}
+		\\\\
+		\noindent\makebox[\textwidth]{\large \bf Homework will not be accepted late}
+	\end{mdframed}
+	\vspace{40pt}
+}
+
+\usepackage{circuitikz}
+
+\setlength{\parindent}{0em}
+\setlength{\itemindent}{.5in}
+
+\newcommand{\poneanswer}{%
+}
+\newcommand{\ptwoanswer}{%
+}
+\newcommand{\pthreeanswer}{%
+}
+\newcommand{\pfouranswer}{%
+}
+\newcommand{\pfiveanswer}{%
+}
+\newcommand{\psixanswer}{%
+}
+% \include{solutions}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  STUDENTS - Your homework begins here.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+	\pagestyle{empty}
+	
+	\homeworkdata{CMSC 250}{Fall 2022}{3}{Sunday 25 Sept.\ 11:59pm}
+	
+	{\Large \bf
+		\begin{center}
+			IMPORTANT
+		\end{center}
+		
+		You can write your answers on any paper, either this paper
+		or blank paper, or write your answer in Latex (template of this homework can be downloaded through ELMS).
+		
+		When you upload your document to Gradescope, make sure you tag your questions.
+		
+		\begin{center}
+			YOU WILL NEED TO TAG YOUR PROBLEMS!!!
+		\end{center}
+		
+		Problems which are not correctly found will not be graded, this is a zero-tolerance policy. 
+		
+		\begin{center}
+			IF YOU ARE WORRIED...
+		\end{center}
+		
+		If you have concerns about tagging your problems,
+		We strongly suggest you drop by office hours and do it with a TA present so they can help you through the process,
+		just to see how it works. In addition, Gradescope has a tutorial: \url{https://help.gradescope.com/article/ccbpppziu9-student-submit-work#submitting_a_pdf}
+		
+		
+	}
+	
+	\pagebreak
+	
+	\problem{Circuits: Table}{16}%
+	Write the corresponding statements of the following truth tables in CNF, and convert them into circuits without simplifying.
+	
+	\bigskip
+	
+	\question{
+		\begin{table*}[h!]
+			\large
+			\begin{tabular}{|c|c|c|}
+				\hline
+				$p$ & $q$ & output\\ \hline
+				0 & 0 & 1 \\\hline
+				0 & 1 & 0  \\\hline
+				1 & 0 & 1  \\\hline
+				1 & 1 & 1  \\\hline
+			\end{tabular}
+		\end{table*}
+	}{8}
+	
+	\textbf{Statement:}\\
+	$p \lor \neg q$
+	\bigskip
+	\bigskip
+	\bigskip
+	
+	\textbf{Circuit:}\\
+	\bigskip
+	\begin{circuitikz}
+        \draw
+        (0,0)     node (not)     [not port]            {} 
+        (not.out) node           [anchor=south west] {$\neg q$}
+        (not.in)  node (q)       [anchor=east, xshift=-0.75cm] {$q$}
+
+        (0,2)     node (or)      [or port, xshift=3cm] {}
+        (or.out)  node           [anchor=south west] {$p \lor \neg q$}
+        (or.in 1) node (p)       [anchor=east, xshift=-3cm] {$p$}
+        (or.in 2) node (not.out) [anchor=east, xshift=-1cm, yshift=-.7cm] {};
+
+        \draw (not.in) -- (q);
+        \draw (or.out) -- ++(1cm, 0);
+        \draw (or.in 1) -- (p);
+        \draw (or.in 2) |- (not.out);
+	\end{circuitikz}
+	
+	\pagebreak
+	
+	\question{
+		\begin{table*}[h!]
+			\large
+			\begin{tabular}{|c|c|c|c|}
+				\hline
+				$p$ & $q$ & $r$ & output\\ \hline
+				0 & 0 & 0 & 0 \\\hline
+				0 & 0 & 1 & 0\\\hline
+				0 & 1 & 0 & 1  \\\hline
+				0 & 1 & 1 & 0 \\\hline
+				1 & 0 & 0 & 1 \\\hline
+				1 & 0 & 1 & 0 \\\hline
+				1 & 1 & 0 & 0 \\\hline
+				1 & 1 & 1 & 1 \\\hline
+			\end{tabular}
+		\end{table*}
+	}{8}
+	
+	\textbf{Statement:}\\
+	$(p \lor q \lor r) \land (p \lor q \lor \neg r) \land (p \lor \neg q \lor \neg r) \land (\neg p \lor q \lor \neg r) \land (\neg p \lor \neg q \lor r)$
+	\bigskip
+	\bigskip
+	\bigskip
+	
+	\textbf{Circuit:}\\
+	\includegraphics[width=15cm]{hw3_img/1b.png}
+	
+	\pagebreak
+	
+	\problem{Circuit: Circuit to statement}{16}
+	
+	What are the statements computed by the following circuits? do not simplify. \\\\
+	
+	\question{\\
+		\includegraphics[width = \linewidth]{hw3_img/circuit_1.png}
+	}{8}
+	
+	\textbf{Statement:}\\
+	$((p \land q) \lor ((p \land q) \lor r)) \land \neg ((p \land q) \lor r)$
+	\bigskip
+	\bigskip
+	\bigskip
+	
+	\question{\\
+		\includegraphics[width = \linewidth]{hw3_img/circuit_2.png}
+	}{8}
+	
+	\textbf{Statement:}\\
+	$\neg (\neg p \land (q \lor r))  \lor ((q \lor r) \land r)$
+	
+	\pagebreak
+	
+	\problem{Circuit: building adders}{50}
+	
+	Additions in binary are similar to additions in normal decimal math. For this question, consider adding two 1 digit binary numbers, $p, q$. Below are the truth table of all the possible cases.
+	
+	\begin{table*}[h!]
+		\large
+		\begin{tabular}{|c|c|c|}
+			\hline
+			$p$ & $q$ & output\\ \hline
+			0 & 0 & 0 \\\hline
+			0 & 1 & 1  \\\hline
+			1 & 0 & 1  \\\hline
+			1 & 1 & 10  \\\hline
+		\end{tabular}
+	\end{table*}
+	
+	We see that when adding two 1 digit binary numbers, the output can be at most 2 digits. To be consistent, let's change the table:
+	
+	\begin{table*}[h!]
+		\large
+		\begin{tabular}{|c|c|c|}
+			\hline
+			$p$ & $q$ & output\\ \hline
+			0 & 0 & 00 \\\hline
+			0 & 1 & 01  \\\hline
+			1 & 0 & 01  \\\hline
+			1 & 1 & 10  \\\hline
+		\end{tabular}
+	\end{table*}
+	
+	Now all outputs are two digits. We will call the left digit of the output "carry bit", and the right digit "sum bit". For the following questions, before converting statements into circuit, please try to simplify (use less logical gates as much as possible). We will penalize circuits with more than 15 gates.\\\\
+	
+	\question{Given two inputs $p, q$, design a circuit to generate the output for the "sum bit" of the truth table above. }{10}
+	$(p \lor q) \land \neg (p \land q)$\\
+	\bigskip
+	\\
+	\begin{circuitikz}\draw
+        (1,2) node[or port, xshift=1cm] (myor) {}
+        (1,0) node[and port, xshift=1cm] (myand1) {}
+        (4,0) node[not port] (mynot) {}
+        (7,0.75) node[and port] (myand2) {}
+        
+        (myor.out) |- (myand2.in 1)
+        (mynot.out) |- (myand2.in 2)
+        (myand1.out) |- (mynot.in)
+        
+        (myor.in 1) -- ++(-0.5,0) |- (myand1.in 1) coordinate[pos=0.33] (a)
+        (a) to[short, *-]  (-1,0|-a)
+        (myor.in 2) |- (myand1.in 2) coordinate[pos=0.43] (b)
+        (b) to[short, *-]  (-1,0|-b)
+        
+        (a) node[xshift=-1.5cm] (p) {$p$}
+        (b) node[xshift=-2cm] (q) {$q$}
+        ;
+	\end{circuitikz}
+	
+	\pagebreak
+	
+	\question{Given two inputs $p, q$, design a circuit to generate the output for the "carry bit" of the truth table above.}{10}
+	$p \land q$\\
+	\bigskip
+	\\
+	\begin{circuitikz} \draw
+	    (0, 0) node[and port] (myand) {}
+	    (myand.out) node[xshift=0.5cm] {$p \land q$}
+	    (myand.in 1) node[anchor=east, xshift=-.5cm] (p) {$p$}
+	    (myand.in 2) node[anchor=east, xshift=-.5cm] (q) {$q$}
+	    (p.east) |- (myand.in 1)
+	    (q.east) |- (myand.in 2)
+	;\end{circuitikz}
+	
+	\pagebreak
+	
+	Combining the circuits you designed, we have a circuit that takes two inputs, and outputs their sum. We will call this, the \textbf{"half-adder"}. It is a circuit that takes 2 inputs and has \textbf{2 outputs}.  Now consider a more sophisticated case: adding two digit numbers. Try adding $11$ with $11$. You will notice that when processing the second digit, there are two inputs, and an additional "carry bit" resulted from the addition in the first digit. Therefore we need a circuit that can process sum for three inputs to complete the addition for the second digit. Below are the truth table for adding three one-bit binary numbers $p, q, r$:
+	
+	\begin{table*}[h!]
+		\large
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			$p$ & $q$ & $r$ & output\\ \hline
+			0 & 0 & 0 & 00 \\\hline
+			0 & 0 & 1 & 01\\\hline
+			0 & 1 & 0 & 01  \\\hline
+			0 & 1 & 1 & 10 \\\hline
+			1 & 0 & 0 & 01 \\\hline
+			1 & 0 & 1 & 10 \\\hline
+			1 & 1 & 0 & 10 \\\hline
+			1 & 1 & 1 & 11 \\\hline
+		\end{tabular}
+	\end{table*}
+	
+	Again, we will call the left digit of the output "carry bit" and the right digit "sum bit". For the following questions, before converting statements into circuit, please try to simplify (use less logical gates as much as possible). We will penalize circuits with more than 15 gates.\\\\
+	
+	\question{Given three inputs $p, q, r$, design a circuit to generate the output for the "sum bit" of the truth table above.}{10}
+	$(\neg p \land \neg q \land r) \lor (\neg p \land q \land \neg r) \lor (p \land \neg q \land \neg r) \lor (p \land q \land r)$\\
+	\includegraphics[width=0.8\linewidth]{hw3_img/3c.png}
+	
+	\pagebreak
+	
+	\question{Given two inputs $p, q, r$, design a circuit to generate the output for the "carry bit" of the truth table above.}{10}
+	$(q \land r) \lor (p \land (q \lor r))$\\
+	\includegraphics[width = \linewidth]{hw3_img/3d.png}
+
+	\pagebreak
+	
+	We will call the circuit that adds three one-digit numbers, the \textbf{"full-adder"}. For the following question, you can use "full-adder" or "half-adder" as a gate. \\
+	
+	\includegraphics[width = 5cm]{hw3_img/adder.png}\\\\
+	
+	\question{Using "full-adder" and/or "half-adder", build a circuit that adds two 3-digit binary numbers. You can treat the input of a 3-digit number as $d_1, d_2, d_3$ where each input represents a digit.}{10}
+	\begin{circuitikz}\draw
+	(1.5, 0.25) node[draw,minimum width=2cm,minimum height=1.25cm] (half_adder) {half-adder}
+	(half_adder.east) node[xshift=0.5cm, yshift=0.45cm] {carry}
+	(half_adder.east) node[xshift=0.5cm, yshift=-0.45cm] {sum}
+	(half_adder.east) ++(0,-0.25) node (half_adder_sum) {}
+	
+	(5, 1.5) node[draw,minimum width=2cm,minimum height=1.5cm] (full_adder1) {full-adder}
+	(full_adder1.west)++(0,0.25) node (full_adder1_in1) {}
+	(full_adder1.west)++(0.15,-0.45) node (full_adder1_in3) {}
+	(full_adder1.east) node[xshift=0.5cm, yshift=0.45cm] {carry}
+	(full_adder1.east) node[xshift=0.5cm, yshift=-0.45cm] {sum}
+	(full_adder1.east) ++(-0.15,-0.25) node (full_adder1_sum) {}
+	
+	(8.5, 3) node[draw,minimum width=2cm,minimum height=1.5cm] (full_adder2) {full-adder}
+	(full_adder2.west)++(0,0.25) node (full_adder2_in1) {}
+	(full_adder2.west)++(0.15,-0.45) node (full_adder2_in3) {}
+	(full_adder2.east) node[xshift=0.5cm, yshift=0.45cm] {carry}
+	(full_adder2.east) node[xshift=0.5cm, yshift=-0.45cm] {sum}
+	(full_adder2.east) ++(-0.15,-0.25) node (full_adder2_sum) {}
+	(full_adder2.east)++(2,+0.25) node (end) {}
+	
+    (0, 0) node (q1) {$b_1$}
+    (0, 0.5) node (p1) {$a_1$}
+    (0, 1.5) node (q2) {$b_2$}
+    (0, 2) node (p2) {$a_2$}
+    (0, 3) node (q3) {$b_3$}
+    (0, 3.5) node (p3) {$a_3$}
+
+    (full_adder2_sum -| end) node[xshift=0.2cm] {$r_3$}
+    (full_adder1_sum -| end) node[xshift=0.2cm] {$r_2$}
+    (half_adder_sum -| end) node[xshift=0.2cm] {$r_1$}
+
+	(half_adder_sum) -- (half_adder_sum -| end)
+	(full_adder1_sum) -- (full_adder1_sum -| end)
+	(full_adder2_sum) -- (full_adder2_sum -| end)
+	
+    (p1.east) -| (half_adder.west)
+    (q1.east) -| (half_adder.west)
+	(p2.east) -| (full_adder1_in1)
+	(q2.east) -| (full_adder1.west)
+	(p3.east) -| (full_adder2_in1)
+	(q3.east) -| (full_adder2.west)
+	
+	(half_adder.east) ++(0,+0.25) -- ++(1,0) |- (full_adder1_in3)
+	(full_adder1.east) ++(0,+0.25) -- ++(1,0) |- (full_adder2_in3)
+	(full_adder2.east) ++(0,+0.25) -- (end)
+	;\end{circuitikz}
+	
+	\pagebreak
+	
+	\problem{quantify the following statement}{18}
+	
+	Using the following domains, quantify the entities in these statements:
+	
+	\begin{itemize}
+		\item $A$ = Apples.
+		
+		\item $S$ = UMD students.
+		
+		\item $T$ = 250 TAs.
+		
+		\item $k(x) = x$ is taking 250
+		
+		\item $r(x) = x$ is red
+		
+		\item $l(x) = x$ likes some apples.
+	\end{itemize}
+	
+	
+	
+	\question{All apples are red.}{4}
+	
+	\textbf{Answer:}
+	$\forall a \in A, r(a)$
+	\bigskip
+	\bigskip
+	\bigskip
+	
+	\question{A UMD student that is not a 250 TA is taking 250.}{4}
+	
+	\textbf{Answer:}
+	$\exists s \in (S - T), k(s)$
+	\bigskip
+	\bigskip
+	\bigskip
+	
+	\question{There is a 250 TA that is a UMD student and likes some apples}{5}
+	
+	\textbf{Answer:}
+	$\exists t \in T, (t \in S) \land l(t)$
+	\bigskip
+	\bigskip
+	\bigskip
+	
+	\question{All UMD students who is not a 250 TA is taking 250 and does not like apples.}{5}
+	
+	\textbf{Answer:}
+	$\forall s \in (S - T), k(s) \land l(s)$
+	\bigskip
+	\bigskip
+	\bigskip
+	
+	
+	
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+

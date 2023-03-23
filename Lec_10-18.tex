@@ -1,0 +1,49 @@
+\documentclass[12pt, leqno]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+% Line before the therefore in proofs
+\newcommand{\proofline}{\rule{0.75in}{0.5pt}}
+% For set literals, wraps in {}
+\newcommand{\set}[1]{\{#1\}}
+% Powerset symbol
+\newcommand{\powerset}{\mathcal{P}}
+% Cardinality
+\newcommand{\card}[1]{\lvert #1 \rvert}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\evens}{\Z^{\mathrm{even}}}
+\newcommand{\odds}{\Z^{\mathrm{odd}}}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\title{Sets and Countability}
+\author{Yash Thakur}
+\date{October 18, 20, 2022}
+
+\begin{document}
+\counterwithout{equation}{section}
+
+\maketitle
+
+Suppose there exist two sets $A$ and $B$. Suppose there also exists a function $f\colon A \mapsto B$.
+\begin{itemize}
+    \item If $f$ is surjective/onto, we know $|A| \geq |B|$
+    \item If $f$ is injective/1-1, we know $|A| \leq |B|$
+    \item \emph{Iff} $f$ is bijective, we know $|A| = |B|$
+\end{itemize}
+
+Cardinality is also transitive.
+
+Set cardinality classification:
+\begin{itemize}
+    \item Finite
+    \item Countably infinite - a set is countably infinite iff there is a bijective function from it to $\mathbb N$\\
+    $\mathbb Z$, $\Z\times\Z$, $\N\times\N$, $\Q$ are all countably infinite.
+    \item Uncountably infinite
+\end{itemize}
+
+\end{document}

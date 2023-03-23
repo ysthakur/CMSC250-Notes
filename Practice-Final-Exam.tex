@@ -1,0 +1,233 @@
+\documentclass[12pt, leqno]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{parskip}
+\usepackage{ulem}
+
+\input{Commands.tex}
+
+\title{Practice for Final}
+\author{Yash Thakur}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Proofs}
+
+\subsection{Direct Proofs}
+
+\begin{enumerate}
+    \item Prove that $\forall n \in \N, 4 \mid (2n^3 + 6n^2 + 4n)$
+
+    We can prove this by cases. $n$ is either even or odd.
+
+    \textbf{Case 1:} $n$ is even.\\
+    Since $n$ is even, there exists a $k \in \Z$ such that $n = 2k$.
+    \begin{flalign*}
+        2n^3 + 6n^2 + 4n &= 2(2k)^3 + 6(2k)^2 + 4(2k) & \text{substitution} & \\
+        &= 4(4k^3) + 4(6k^2) + 4(2k) & \text{arithmetic} & \\
+        &= 4(4k^3 + 6k^2 + 2k) & \text{arithmetic}
+    \end{flalign*}
+    $4k^3 + 6k^2 + 2k \in \Z$ since the integers are closed under multiplication and addition.\\
+    Therefore, $4 \mid 4(4k^3 + 6k^2 + 2k) = 2n^3 + 6n^2 + 4n$
+
+    \textbf{Case 2:} $n$ is odd.\\
+    Since $n$ is odd, there exists a $k \in \Z$ such that $n = 2k + 1$.
+    \begin{flalign*}
+        2n^3 + 6n^2 + 4n &= 2(2k+1)^3 + 6(2k+1)^2 + 4(2k+1) & \text{substitution} & \\
+        &= (2k+1)(2(2k+1)^2 + 6(2k+1) + 4) & \text{arithmetic} & \\
+        &= (2k+1)(2(4k^2+2k+1) + 12k+6 + 4) & \text{arithmetic} & \\
+        &= (2k+1)(8k^2+4k+2 + 12k+6 + 4) & \text{arithmetic} & \\
+        &= (2k+1)(8k^2+16k+12) & \text{arithmetic} & \\
+        &= 4(2k+1)(2k^2+4k+3) & \text{arithmetic} & \\
+    \end{flalign*}
+    $(2k+1)(2k^2+4k+3) \in \Z$ since the integers are closed under multiplication and addition.\\
+    Therefore, $4 \mid 4(2k+1)(2k^2+4k+3) = 2n^3 + 6n^2 + 4n$
+
+    In both cases, $4 \mid 2n^3 + 6n^2 + 4n$. Therefore, we have proven that $\forall n \in \N, 4 \mid 2n^3 + 6n^2 + 4n$
+
+    \item Prove that $\forall m, n \in \N, 6 \mid m \land 4 \mid n \Rightarrow 2 \mid (5m - 7n)$
+
+    This can be proven using a direct proof
+
+    From the premises, we have $m, n \in \N$ such that $6 \mid m \land 4 \mid n$\\
+    So $6 \mid m$ and $4 \mid n$ using specialization\\
+    Since $6 \mid m$, there exists a $k \in \Z$ such that $m = 6k$\\
+    Since $4 \mid n$, there exists a $j \in \Z$ such that $n = 4k$
+
+    $5m - 7n = 5(6k) - 7(4n)$ using substitution\\
+    $5m - 7n = 2(15k) - 2(14n)$\\
+    $5m - 7n = 2(15k - 14n)$\\
+    Since the integers are closed under addition and multiplication, $15k - 14n \in \Z$\\
+    Therefore, $2 \mid 2(15k - 14n) = 5m - 7n$
+
+    Thus, we have proved that $\forall m, n \in \N, 6 \mid m \land 4 \mid n \Rightarrow 2 \mid (5m - 7n)$
+\end{enumerate}
+
+\subsection{Proof by Contrapositive}
+
+\begin{enumerate}
+    \item Prove that for all sets $A, B, C$ which are a subset of a universal set $U$ that $(A - C) \cap B \neq \varnothing \Rightarrow A \cap B \not\subseteq C$
+
+    This can be done with a proof by contrapositive. We can prove instead that $A \cap B \subseteq C \Rightarrow (A - C) \cap B = \varnothing$
+    \begin{flalign}
+        & A \cap B \subseteq C & \text{Premise} & \\
+        & \forall x \in A \cap B, x \in C & \text{Definition of $\subseteq$} \\
+        & \forall x \in A - C, x \in A \land x \not\in C & \text{Definition of $-$} \\
+        & \forall x \in A - C, x \in A & \text{Specialization (3)} \\
+        & \forall x \in A - C, x \not\in C & \text{Specialization (3)} \\
+        & \forall x \in (A - C) \cap B, x \in (A - C) \land x \in B & \text{Definition of $\cap$} \\
+        & \forall x \in (A - C) \cap B, x \in (A - C) & \text{Specialization (5)} \\
+        & \forall x \in (A - C) \cap B, x \in B & \text{Specialization (6)} \\
+        & \forall x \in (A - C) \cap B, x \in A & \text{Modus Ponens (7, 4)} \\
+        & \forall x \in (A - C) \cap B, x \in A \land x \in B & \text{Conjunction (8, 9)} \\
+        & \forall x \in (A - C) \cap B, x \in A \cap B & \text{Definition of $\cap$ (10)} \\
+        & \forall x \in (A - C) \cap B, x \in C & \text{Modus Ponens (11, 1)} \\
+        & \forall x \in (A - C) \cap B, x \not\in C & \text{Modus Ponens (7, 5)} \\
+        & \forall x \in (A - C) \cap B, x \in C \land x \not\in C & \text{Conjunction (12, 13)} \\
+        & \neg \exists x, x \in (A - C) \cap B & \text{Contradiction (14)}
+    \end{flalign}
+
+    Since there are no elements in $(A - C) \cap B$, we know that $(A - C) \cap B = \varnothing$.
+
+    Thus, we have proven that $(A - C) \cap B \neq \varnothing \Rightarrow A \cap B \not\subseteq C$.
+
+    \hline
+
+    Direct proof below not right approach
+
+    From the premise, we know that $(A - C) \cap B \neq \varnothing$.\\
+    Because of the definition of set equality, we know that $(A - C) \cap B \not\subseteq \varnothing \lor \varnothing \not\subseteq (A - C) \cap B$.\\
+
+    We can now split into two cases based on that disjunction.
+
+    \textbf{Case 1:} $\varnothing \not\subseteq (A - C) \cap B$\\
+    Since the empty set is a subset of all sets, $\varnothing \subseteq (A - C) \cap B$.\\
+    However, this contradicts with the assumption for this case that $\varnothing \not\subseteq (A - C) \cap B$.\\
+    Therefore, this case is not possible.
+
+    \textbf{Case 2:} $(A - C) \cap B \not\subseteq \varnothing$
+    \begin{flalign}
+        & (A - C) \cap B \not\subseteq \varnothing & \text{Case assumption} & \\
+        & \neg \forall x \in (A - C) \cap B, x \in \varnothing & \text{Definition of $\subseteq$ (1)} \\
+        & \exists x \in (A - C) \cap B, x \not\in \varnothing & \text{De Morgan's (2)} \\
+        & x \in (A - C) \land x \in B & \text{Definition of $\cap$ (3)} \\
+        & x \in (A - C) & \text{Specialization (4)} \\
+        & x \in B & \text{Specialization (4)} \\
+        & x \in A \land x \not\in C & \text{Definition of $-$ (5)} \\
+        & x \in A & \text{Specialization (7)} \\
+        & x \not\in C & \text{Specialization (7)} \\
+        & (x \in A) \land (x \in B) & \text{Conjunction (6, 8)} \\
+        & x \in A \cap B & \text{Definition of $\cap$ (10)} \\
+        & \exists y \in A \cap B, y \not\in C & \text{(9, 11)} \\
+        & \neg \forall y \in A \cap B, y \in C & \text{De Morgan's (12)} \\
+        & \neg (A \cap B \subseteq C) & \text{Definition of $\subseteq$ (13)}
+    \end{flalign}
+
+    In both cases, we have proven that $A \cap B \not\subseteq C$
+
+    Therefore, we have proven $(A - C) \cap B \neq \varnothing \Rightarrow A \cap B \not\subseteq C$
+
+    \item Let $x, y$ be two integers. Suppose $x^2(y^2 - 2y)$ is odd. Prove that $x$ and $y$ are odd.
+
+    This can be done using a proof by contrapositive. We can instead prove that if $x$ and $y$ are even, then $x^2(y^2 - 2y)$ is even.
+
+    Since $x$ is even, there exists a $k \in \Z$ such that $x = 2k$.\\
+    $x^2(y^2 - 2y) = (2k)^2(y^2 - 2y)$\\
+    $x^2(y^2 - 2y) = 2(2k^2)(y^2 - 2y)$\\
+    Since the integers are closed under addition and multiplication, $(2k^2)(y^2 - 2y) \in \Z$\\
+    So $2 \mid 2(2k^2)(y^2 - 2y) = x^2(y^2 - 2y)$
+
+    Thus, we have proven that if $x^2(y^2 - 2y)$ is odd, then $x$ and $y$ are odd.
+\end{enumerate}
+
+\subsection{Proof by Contradiction}
+
+\begin{enumerate}
+    \item Prove $\forall x, y \in \Z^+, x^2 - y^2 \neq 1$
+
+    This can be done using a proof by contradiction.
+
+    Assume that $\exists x, y \in \Z^+, x^2 - y^2 = 1$\\
+    So by factoring, $(x + y)(x - y) = 1$
+
+    We can split on two cases now, $x = y$ or $x \neq y$
+
+    \textbf{Case 1:} $x = y$\\
+    $(x + x)(x - x) = 1$\\
+    $(x + x)0 = 1$\\
+    $0 = 1$\\
+    This is a contradiction, so it's not possible that $x = y$
+
+    \textbf{Case 2:} $x \neq y$\\
+    $(x + y) = \frac 1{x-y}$\\
+    Since $x + y \in \Z$, we also have that $\frac 1{x-y} \in \Z$\\
+    For $\frac 1{x-y}$ to be an integer, 1 must be divisible by $x-y$\\
+    This means that $x-y$ is either -1 or 1\\
+    This means that $\frac 1{x-y}$ is either -1 or 1\\
+    So $x+y$ is either -1 or 1\\
+    But this cannot be true, since both $x$ and $y$ are positive, so their sum must be at least 2.\\
+    This is a contradiction, so it's not possible that $x \neq y$
+
+    Since both cases result in contradictions, it's not possible that $x^2-y^2=1$
+
+    Thus, we have proven that $\forall x, y \in \Z^+, x^2 - y^2 \neq 1$
+
+    \item Prove that $\sqrt[3]{2}$ is irrational.
+
+    \textbf{Lemma:} For any integer $x$, if $x^3$ is even, then $x$ is even.
+
+    This can be done using a proof by contrapositive. We can prove instead that if $x$ is odd, then $x^3$ is odd.
+
+    Since $x$ is odd, there exists a $k \in \Z$ such that $x = 2k+1$\\
+    Substituting that in, $x^3 = (2k+1)^3 = 8k^3 + 12k^2 + 6k + 1 = 2(4k^3 + 6k^2 + 3k) + 1$\\
+    Since the integers are closed under addition and multiplication, $4k^3 + 6k^2 + 3k \in \Z$\\
+    So $2(4k^3 + 6k^2 + 3k) + 1$ is odd, which means $x^3$ is odd.
+
+    Thus, we have proven that if $x^3$ is even, then $x$ is even.
+
+    \textbf{Proof:}
+
+    This can be done using a proof by contradiction.
+
+    Assume that $\sqrt[3]{2}$ is rational.
+
+    Since $\sqrt[3]{2}$ is rational, $\exists p, q \in \Z, \sqrt[3]{2} = \frac p q, q \neq 0$. WLOG, let $p$ and $q$ share no common factors so that $\frac p q$ is simplified.\\
+    So $2 = \frac{p^3}{q^3}$\\
+    $p^3 = 2q^3$\\
+    $q^3 \in \Z$ since $q \in \Z$ and the integers are closed under multiplication\\
+    So $2 \mid 2q^3$, which means $2 \mid p^3$\\
+    Since $p^3$ is even, $p$ is also even according to the lemma above.\\
+    So there exists a $k \in \Z$ such that $2 \mid p$\\
+    $2q^3 = p^3 \Rightarrow 2q^3 = 8k^3 \Rightarrow q^3 = 2(2k^3)$\\
+    $2k^3 \in \Z$ since the integers are closed under multiplication\\
+    So $2 \mid 2(2k^3) = q^3$\\
+    Since $2 \mid q^3$, by the lemma, $2 \mid q$\\
+    Since $q$ is even, there exists a $j \in \Z$ such that $q = 2j$\\
+    So $p$ and $q$ have a common factor (2).\\
+    This is a contradiction, as we said at the beginning that they don't have a common factor
+
+    Therefore, $\sqrt[3]{2}$ is not rational.
+\end{enumerate}
+
+\section{Relations}
+
+\begin{enumerate}
+    \item Reflexive, symmetric, transitive
+    \item Reflexive, symmetric, transitive
+    \item Reflexive, not symmetric, transitive
+\end{enumerate}
+
+\section{Functions}
+
+\begin{enumerate}
+    \item \sout{None} Surjective, since it's naturals, not reals
+    \item \sout{Bijective} Injective, since it's naturals, not integers
+    \item Bijective
+\end{enumerate}
+
+\end{document}

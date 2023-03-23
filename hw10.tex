@@ -1,0 +1,408 @@
+\documentclass[leqno]{article}
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\textwidth}{6in}
+\setlength{\topmargin}{-0.1in}
+\setlength{\textheight}{8.2in}
+
+%%%%%%%%%%%%%  IMPORT MACRO FILES AS NEEDED %%%%%%%%%%%
+\usepackage{amsgen,amsmath,amstext,amsbsy,amsopn,amssymb,amsthm,stackengine}
+\usepackage{array, nicefrac, mathtools}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{float,relsize,setspace,enumitem,pbox,cleveref,multicol,multirow}
+\usepackage{multido}
+\usepackage{bbding} % Has a checkmark symbol reachable through \Checkmark
+\usepackage{tikz,mdframed}
+% \usepackage{circuitikz}
+
+\input{Commands}
+
+% Theorems, definitions, equations, lemmas
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{defn}{Definition}
+\newtheorem{rem}[thm]{Remark}
+\numberwithin{equation}{section}
+\newtheorem*{defn*}{Definition} % Theorem environments with no numbering
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{thm*}{Theorem}
+\theoremstyle{definition}
+\newtheorem*{fact}{Fact}
+
+% For negation and quantifiers in Discrete Math
+\newcommand{\shortsim}{\raise.17ex\hbox{$\scriptstyle \sim$}}
+\renewcommand{\neg}{\shortsim}
+\renewcommand{\nexists}{\neg(\exists}
+\newcommand{\nequiv}{\ensuremath{\not\equiv}}
+
+\newcommand{\myline}[1]{\underline{\hspace{#1}}}
+\newcommand*\emptycirc[1][1ex]{\tikz\draw (0,0) circle (#1);} 
+\newcounter{parts}
+\newcounter{problems}[parts]
+\newcounter{questions}[problems]
+\newcounter{subquestions}[questions]
+\newcommand{\hwpart}[1]{
+  \stepcounter{parts}
+  \noindent\makebox[\textwidth]{\LARGE \bf Part \arabic{parts} - #1}
+  \\
+}
+\newcommand{\problem}[2]{\stepcounter{problems}
+  {\Large \bf \noindent Problem \arabic{problems}: #1 \marginpar{[Total #2 pts]} \\[0.3cm]}}
+\newcommand{\question}[2]{\stepcounter{questions}
+  {\large (\alph{questions}) #1 \marginpar{[#2 pts]} \\[.3cm]}}
+\newcommand{\subquestion}[2]{\stepcounter{subquestions}
+  {\hspace{10pt}\emph{(\roman{subquestions}) #1 \marginpar{[#2 pts]} }\\[.3cm]}}
+
+% Solution formatting
+\newcommand{\solution}[1]{{\color{red}{#1}}}
+% Some standard centering and italicization of text.
+\newcommand{\frontrowcenter}[1]{\begin{center}{\em \Large  #1  }\end{center}}
+
+% A blank page
+\newcommand{\blankpage}{
+\clearpage
+\vspace*{\fill}
+\begin{minipage}{\textwidth}
+  \Large \textbf{THIS PAGE INTENTIONALLY LEFT BLANK}\\
+\end{minipage}
+\vfill % equivalent to \vspace{\fill}
+\clearpage
+}
+
+\newcommand{\answerspace}[1]{
+  \begin{center}
+    \textbf{BEGIN YOUR ANSWER BELOW THIS LINE} \\ \hrulefill \vspace{#1} \\ \hrulefill
+  \end{center}
+}
+
+\newcommand{\answerspacefullpage}{
+  \begin{center}
+    \textbf{BEGIN YOUR ANSWER BELOW THIS LINE} \\ \hrulefill \pagebreak
+  \end{center}
+}
+
+\newcommand{\additionalanswerspace}[1]{
+  \begin{center}
+    \textbf{CONTINUE YOUR ANSWER BELOW THIS LINE } \\ \hrulefill \vspace{#1} \\ \hrulefill
+  \end{center}
+}
+
+\newcommand{\additionalanswerspacefullpage}{
+  \begin{center}
+    \textbf{CONTINUE YOUR ANSWER BELOW THIS LINE} \\ \hrulefill \pagebreak
+  \end{center}
+}
+
+\newcommand{\freespace}[1]{
+  \begin{center}
+    \large \textbf{SCRAP SPACE BELOW} \\
+    \hrulefill
+    \pagebreak
+  \end{center}
+}
+
+% Centered line
+\newcommand{\mycenterline}[1]{
+  \begin{center}
+    \myline{#1}
+  \end{center}
+}
+
+% Space for T/F:
+\newcommand{\tfline}{\myline{.5cm}}
+
+% For quick parenthesized and italicized point annotation.
+\newcommand{\pts}[1]{{\em (#1 pts)}}
+\newcommand{\onept}{{\em (1 pt)}}
+
+% \item environments coupled with a line at the end, for students to write T and F in.
+\newcommand{\tfitem}[1]{\item #1 \null\hfill \framebox(25,25){} \\ \hdashrule{0.95\textwidth}{1pt}{2pt}}
+\newcommand{\setitem}[1]{\tfitem{$\curlybraces{#1}$} }
+\newcommand{\lineitem}[2]{\item #1 \null \hfill \myline{#2}}
+
+% Some circles and squares for students to fill in.
+\newcommand{\whitecircle}[1]{\tikz[baseline=-0.5ex]\draw[black, radius=#1] (0,0) circle ;}
+\newcommand{\whitesquare}[1]{\tikz\draw[black] (0,0) rectangl#1, #1) ;}
+
+% Emphasis
+\newcommand{\F}{$\mathbf{F}$}
+\newcommand{\T}{$\mathbf{T}$}
+\newcommand{\False}{\textbf{False}}
+\newcommand{\false}{\textbf{false}}
+\newcommand{\True}{\textbf{True}}
+\newcommand{\true}{\textbf{true}}
+\newcommand{\makered}[1]{\textcolor{red}{#1}}
+\newcommand{\Rbbst}{\textcolor{red}{Red}-black tree}
+\newcommand{\rbbst}{\textcolor{red}{red}-black tree}
+
+\newcommand{\homeworkdata}[4]{
+  \begin{mdframed}[linewidth=1pt]
+    \noindent\makebox[\textwidth]{\LARGE \bf #1, #2 }
+    \\\\
+    \noindent\makebox[\textwidth]{\Large \bf  Homework \##3 }
+    \\\\
+    \noindent\makebox[\textwidth]{\large \bf  Due: #4}
+    \\\\
+    \noindent\makebox[\textwidth]{\large \bf Homework will not be accepted late}
+  \end{mdframed}
+  \vspace{40pt}
+}
+
+\usepackage{circuitikz}
+
+\setlength{\parindent}{0em}
+\setlength{\itemindent}{.5in}
+
+\newcommand{\poneanswer}{%
+}
+\newcommand{\ptwoanswer}{%
+}
+\newcommand{\pthreeanswer}{%
+}
+\newcommand{\pfouranswer}{%
+}
+\newcommand{\pfiveanswer}{%
+}
+\newcommand{\psixanswer}{%
+}
+% \include{solutions}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  STUDENTS - Your homework begins here.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\pagestyle{empty}
+
+\homeworkdata{CMSC 250}{Fall 2022}{10}{Sunday 4 Dec.\ 11:59pm}
+
+{\Large \bf
+  \begin{center}
+  IMPORTANT
+  \end{center}
+
+  You can write your answers on any paper, either this paper
+  or blank paper, or write your answer in Latex (template of this homework can be downloaded through ELMS).
+  
+  When you upload your document to Gradescope, make sure you tag your questions.
+
+  \begin{center}
+    YOU WILL NEED TO TAG YOUR PROBLEMS!!!
+  \end{center}
+
+  Problems which are not correctly found will not be graded, this is a zero-tolerance policy. 
+
+  \begin{center}
+    IF YOU ARE WORRIED...
+  \end{center}
+
+  If you have concerns about tagging your problems,
+  We strongly suggest you drop by office hours and do it with a TA present so they can help you through the process,
+  just to see how it works. In addition, Gradescope has a tutorial: \url{https://help.gradescope.com/article/ccbpppziu9-student-submit-work#submitting_a_pdf}
+
+
+}
+
+\pagebreak
+
+
+\problem{Probability}{40}
+
+For the following questions, show your work AND calculate the final answer.
+
+\bigskip
+\bigskip
+
+\question{Suppose you have a box of chips. In the box, there are 7 bags of corn chips, 5 bags of potato chips and 4 bags of tortilla chips. You pick two bags one-by-one \textbf{without} replacement (you don't put them back after picking). What is the probability that you will pick one bag of potato chips and one bag of tortilla chips, regardless of the order that you pick them?}{10}
+Total bags: $7 + 5 + 4 = 16$\\
+Total events: $16 \cdot 15 = 240$\\
+Ways of getting potato chips first and tortilla chips second: $5 \cdot 4 = 20$\\
+Multiply by 2 since could have tortilla first and potato second: $20 \cdot 2 = 40$\\
+Probability: $\displaystyle \frac{40}{240} = \frac 1 6$
+
+
+\bigskip
+\bigskip
+\bigskip
+
+\question{Suppose you have a box of chips. In the box, there are 7 bags of corn chips, 5 bags of potato chips and 4 bags of tortilla chips. You pick two bags one-by-one \textbf{with} replacement (you put them back after picking). What is the probability that you will pick one bag of corn chips and one bag of tortilla chips, regardless of the order that you pick them?}{10}
+Total events: $16 \cdot 16 = 256$\\
+Ways of getting corn chips first and tortilla chips second: $7 \cdot 4 = 28$\\
+Multiply by 2 since could have tortilla first and corn second: $28 \cdot 2 = 56$\\
+Probability: $\displaystyle \frac{56}{256} = \frac{7}{32}$
+
+\bigskip
+\bigskip
+\bigskip
+
+\question{Three people are asked to throw a fair die. What is the probability that all of them get the same number?}{10}
+Total events: $6^3 = 216$\\
+6 ways to get same number (everyone gets 1, everyone gets 2, ...)\\
+Probability: $\displaystyle \frac{6}{6^3} = \frac{1}{36}$
+
+\bigskip
+\bigskip
+\bigskip
+
+\question{Excluding the jokers, a deck of cards has 52 cards. What is the probability of drawing three aces in a row without replacement?}{10}
+Total events: $\displaystyle _{52}P_{3} = \frac{52!}{(52-3)!} = 132600$\\
+Ways to get 3 aces in a row (choose 3, then permute them): $\displaystyle _4C_3 \cdot \,_3P_3 = \frac{4!}{3!} \cdot 3! = 4! = 24$\\
+Probability: $\displaystyle \frac{24}{132600} = \frac 1 {5525}$
+
+\pagebreak
+
+\problem{Expected Values}{40}
+
+For the following questions, show your work AND calculate the final answer.
+
+\bigskip
+\bigskip
+
+\question{A biased coin has the probability that a head comes up when flipped is 0.35. What is the expected number of heads that come up when it is flipped ten times?}{10}
+Just sum 0.35 ten times: $0.35 \cdot 10 = 3.5$\\
+The expected number of heads is 3.5
+
+\bigskip
+\bigskip
+
+\question{Suppose that we flip a fair coin until either it comes up tails twice or we have flipped it six times. What is the expected number of times we flip the coin?}{10}
+
+% TODO Check this
+
+There are $n - 1$ ways to get tails twice after flipping exactly $n$ times because the second T must be last and there $n-1$ places to put the first T. So there are $1 + 2 + 3 + 4 + 5 = 15$ ways to get tails twice if you flip until you've flipped six times.
+
+\bigskip
+
+There is also the possibility of flipping six times without getting tails twice. This can happen if you get all heads (1 way) or 1 tail (6 ways). The number of possibilities here are $1 + 6 = 7$.
+
+\bigskip
+
+In total, there are $15 + 7 = 22$ possibilities.
+
+\bigskip
+
+The probability of getting tails twice after flipping a coin $n$ times is $\frac{n-1}{22}$\\
+So if the value of flipping a coin $n$ times is $n$, then the expected value of getting tails twice after flipping exactly $n$ times is $\frac{(n-1)}{22} \cdot n$.\\
+Therefore, the expected number of coin flips if we flip up to 6 times to try to get 2 tails or if we flip 6 times without getting 2 tails is\\
+$\displaystyle \frac{7}{22}(6) + \sum_{i=2}^6 \frac{(i-1)}{22}(i) = \frac{7}{22}(6) + \frac{1(2) + 2(3) + 3(4) + 4(5) + 5(6)}{22} \approx 5.09$
+
+\bigskip
+
+The expected number of times we flip the coin is $5.09$
+
+\bigskip
+\bigskip
+
+\question{There are 168 prime numbers between 1 to 1000. If we were to select numbers at random until a prime number is selected, what is the expected number of times we have to select?}{10}
+
+% TODO check this
+
+There are $1000 - 168 = 832$ composite numbers\\
+Max times you can select: $832 + 1 = 833$
+
+\bigskip
+
+To get a prime after selecting $n$ times, you would choose $n-1$ composite numbers, permute them, then choose the prime at the end. That can happen in $\comb{832}{n-1} \cdot n! \cdot 168$ ways\\
+So the total number of possibilities is:
+\[\sum_{i=1}^{833} \comb{832}{i-1} \cdot i! \cdot 168 = 168 \sum_{i=1}^{833} \frac{832!}{(833-n)!(i-1)!} \cdot i! = 168 \sum_{i=1}^{833} \frac{832! \cdot i}{(833-i)!}\]
+
+\bigskip
+
+Value of getting a prime after selecting $n$ times: $n$\\
+Probability of getting a prime after selecting $n$ times: $\displaystyle \frac{\comb{832}{n-1} \cdot n! \cdot 168}{168 \sum_{i=1}^{833} \frac{832! \cdot n}{(833-n)!}}$\\
+So expected number of times we have to select:
+\[\frac{\sum_{i=1}^{833} \frac{832! \cdot i}{(833-i)!} \cdot 168 \cdot i }{168 \sum_{i=1}^{833} \frac{832! \cdot i}{(833-i)!}} = \frac{\sum_{i=1}^{833} \frac{i^2}{(833-i)!}}{\sum_{i=1}^{833} \frac{i}{(833-i)!}} = 832.001\]
+
+\bigskip
+\bigskip
+
+\question{A 1\$ lottery ticket has the following prices: 10\$ cash for 3; 50\$ cash for 2; 100\$ cash for 1. Winners are chosen randomly. If 300 people bought this lottery, what is the expected profit of a random person?}{10}
+
+$\displaystyle \frac{3}{300} \cdot 9 + \frac{2}{300} \cdot 49 + \frac{1}{300} \cdot 99 + \frac{94}{300} \cdot (-1) = 0.433$
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+\pagebreak
+
+\problem{Conditional Probability}{30}
+
+For the following questions, show your work AND calculate the final answer.
+
+\bigskip
+\bigskip
+
+\question{Suppose the test for covid is 99.6\% accurate, and 6\% of the population has covid. If someone tests positive, what is the probability that this person has covid?}{10}
+
+$P(\text{has covid and tests positive}) = P(\text{has covid})P(\text{tests positive} \mid \text{has covid}) = 0.06 \cdot 0.996 = 0.05976$\\
+$P(\text{doesn't have covid and tests positive}) = P(\text{doesn't has covid})P(\text{tests positive} \mid \text{has covid}) = (1 - 0.06) \cdot (1 - 0.996) = 0.00376$\\
+$P(\text{tests positive}) = P(\text{(has covid and tests positive)} \cup \text{(doesn't have covid and tests positive)}) = 0.05976 + 0.00376 = 0.06352$
+
+Probability that the person has covid:\\
+$\displaystyle P(\text{has covid} \mid \text{tests positive}) = \frac{P(\text{has covid and tests positive})}{P(\text{tests positive})} = \frac{0.05976}{0.06352} = 0.94$
+
+There is approximately a 94\% chance of the person having covid.
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+\question{ We throw a fair die three times. If we observe the first throw is a 4, what is the probability that there is at least two 4s in the three throws?}{10}
+
+This is the same as the probability that there is at least one 4 in two throws. The total number of events with two throws is $6 \cdot 6 = 36$, there are $6$ ways to get a 4 on the first throw, $6$ ways to get a 4 on the second throw, and 1 way to get a 4 on both throws.\\
+So the probability is $\displaystyle \frac{6+6-1}{36} = \frac{11}{36}$
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+\question{Suppose you have a box of chips. In the box, there are 7 bags of corn chips, 5 bags of potato chips and 4 bags of tortilla chips. You pick two bags one-by-one \textbf{without} replacement (you don't put them back after picking). After picking a bag of chips, what is the probability that the next bag is a bag of tortilla chips?}{10}
+
+After picking one bag, there are $7 + 5 + 4 - 1 = 15$ bags left.
+
+\bigskip
+
+If you picked a bag of tortilla chips (which has a $\frac{4}{16}$ chance of happening), then the probability that the next bag is also a bag of tortilla chips is $\frac{4}{16} \cdot \frac{3}{15}$.
+
+\bigskip
+
+If you didn't pick a bag of tortilla chips (which has a $\frac{12}{16}$ chance of happening), then the probability that the next bag is also a bag of tortilla chips is $\frac{12}{16} \cdot \frac{4}{15}$.
+
+\bigskip
+
+In total, the probability that the next bag is a bag of tortilla chips is \[\frac{4}{16} \cdot \frac{3}{15} + \frac{12}{16} \cdot \frac{4}{15} = \frac{4 \cdot 3 + 12 \cdot 4}{16 \cdot 15} = \frac{3 + 12}{4 \cdot 15} = \frac{1 + 4}{4 \cdot 5} = \frac{5}{20} = \frac{1}{4}\]
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+\pagebreak
+
+
+
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+

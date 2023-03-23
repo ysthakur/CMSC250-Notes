@@ -1,0 +1,310 @@
+\documentclass[leqno]{article}
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\textwidth}{6in}
+\setlength{\topmargin}{-0.1in}
+\setlength{\textheight}{8.2in}
+
+%%%%%%%%%%%%%  IMPORT MACRO FILES AS NEEDED %%%%%%%%%%%
+\usepackage{amsgen,amsmath,amstext,amsbsy,amsopn,amssymb,amsthm,stackengine}
+\usepackage{array, nicefrac, mathtools}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{float,relsize,setspace,enumitem,pbox,cleveref,multicol,multirow}
+\usepackage{multido}
+\usepackage{bbding} % Has a checkmark symbol reachable through \Checkmark
+\usepackage{tikz,mdframed}
+\usepackage{listings}
+% \usepackage{circuitikz}
+
+% Theorems, definitions, equations, lemmas
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{defn}{Definition}
+\newtheorem{rem}[thm]{Remark}
+\numberwithin{equation}{section}
+\newtheorem*{defn*}{Definition} % Theorem environments with no numbering
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{thm*}{Theorem}
+\theoremstyle{definition}
+\newtheorem*{fact}{Fact}
+
+% For negation and quantifiers in Discrete Math
+\newcommand{\shortsim}{\raise.17ex\hbox{$\scriptstyle \sim$}}
+\renewcommand{\neg}{\shortsim}
+\renewcommand{\nexists}{\neg(\exists}
+\newcommand{\nequiv}{\ensuremath{\not\equiv}}
+
+\newcommand{\myline}[1]{\underline{\hspace{#1}}}
+\newcommand*\emptycirc[1][1ex]{\tikz\draw (0,0) circle (#1);} 
+\newcounter{parts}
+\newcounter{problems}[parts]
+\newcounter{questions}[problems]
+\newcounter{subquestions}[questions]
+\newcommand{\hwpart}[1]{
+  \stepcounter{parts}
+  \noindent\makebox[\textwidth]{\LARGE \bf Part \arabic{parts} - #1}
+  \\
+}
+\newcommand{\problem}[2]{\stepcounter{problems}
+  {\Large \bf \noindent Problem \arabic{problems}: #1 \marginpar{[Total #2 pts]} \\[0.3cm]}}
+\newcommand{\question}[2]{\stepcounter{questions}
+  {\large (\alph{questions}) #1 \marginpar{[#2 pts]} \\[.3cm]}}
+\newcommand{\subquestion}[2]{\stepcounter{subquestions}
+  {\hspace{10pt}\emph{(\roman{subquestions}) #1 \marginpar{[#2 pts]} }\\[.3cm]}}
+
+% Solution formatting
+\newcommand{\solution}[1]{{\color{red}{#1}}}
+% Some standard centering and italicization of text.
+\newcommand{\frontrowcenter}[1]{\begin{center}{\em \Large  #1  }\end{center}}
+
+% A blank page
+\newcommand{\blankpage}{
+\clearpage
+\vspace*{\fill}
+\begin{minipage}{\textwidth}
+  \Large \textbf{THIS PAGE INTENTIONALLY LEFT BLANK}\\
+\end{minipage}
+\vfill % equivalent to \vspace{\fill}
+\clearpage
+}
+
+\newcommand{\answerspace}[1]{
+  \begin{center}
+    \textbf{BEGIN YOUR ANSWER BELOW THIS LINE} \\ \hrulefill \vspace{#1} \\ \hrulefill
+  \end{center}
+}
+
+\newcommand{\answerspacefullpage}{
+  \begin{center}
+    \textbf{BEGIN YOUR ANSWER BELOW THIS LINE} \\ \hrulefill \pagebreak
+  \end{center}
+}
+
+\newcommand{\additionalanswerspace}[1]{
+  \begin{center}
+    \textbf{CONTINUE YOUR ANSWER BELOW THIS LINE } \\ \hrulefill \vspace{#1} \\ \hrulefill
+  \end{center}
+}
+
+\newcommand{\additionalanswerspacefullpage}{
+  \begin{center}
+    \textbf{CONTINUE YOUR ANSWER BELOW THIS LINE} \\ \hrulefill \pagebreak
+  \end{center}
+}
+
+\newcommand{\freespace}[1]{
+  \begin{center}
+    \large \textbf{SCRAP SPACE BELOW} \\
+    \hrulefill
+    \pagebreak
+  \end{center}
+}
+
+% Centered line
+\newcommand{\mycenterline}[1]{
+  \begin{center}
+    \myline{#1}
+  \end{center}
+}
+
+% Space for T/F:
+\newcommand{\tfline}{\myline{.5cm}}
+
+% For quick parenthesized and italicized point annotation.
+\newcommand{\pts}[1]{{\em (#1 pts)}}
+\newcommand{\onept}{{\em (1 pt)}}
+
+% \item environments coupled with a line at the end, for students to write T and F in.
+\newcommand{\tfitem}[1]{\item #1 \null\hfill \framebox(25,25){} \\ \hdashrule{0.95\textwidth}{1pt}{2pt}}
+\newcommand{\setitem}[1]{\tfitem{$\curlybraces{#1}$} }
+\newcommand{\lineitem}[2]{\item #1 \null \hfill \myline{#2}}
+
+% Some circles and squares for students to fill in.
+\newcommand{\whitecircle}[1]{\tikz[baseline=-0.5ex]\draw[black, radius=#1] (0,0) circle ;}
+\newcommand{\whitesquare}[1]{\tikz\draw[black] (0,0) rectangl#1, #1) ;}
+
+% Emphasis
+\newcommand{\F}{$\mathbf{F}$}
+\newcommand{\T}{$\mathbf{T}$}
+\newcommand{\False}{\textbf{False}}
+\newcommand{\false}{\textbf{false}}
+\newcommand{\True}{\textbf{True}}
+\newcommand{\true}{\textbf{true}}
+\newcommand{\makered}[1]{\textcolor{red}{#1}}
+\newcommand{\Rbbst}{\textcolor{red}{Red}-black tree}
+\newcommand{\rbbst}{\textcolor{red}{red}-black tree}
+
+\newcommand{\homeworkdata}[4]{
+  \begin{mdframed}[linewidth=1pt]
+    \noindent\makebox[\textwidth]{\LARGE \bf #1, #2 }
+    \\\\
+    \noindent\makebox[\textwidth]{\Large \bf  Homework \##3 }
+    \\\\
+    \noindent\makebox[\textwidth]{\large \bf  Due: #4}
+    \\\\
+    \noindent\makebox[\textwidth]{\large \bf Homework will not be accepted late}
+  \end{mdframed}
+  \vspace{40pt}
+}
+
+\usepackage{circuitikz}
+
+\setlength{\parindent}{0em}
+\setlength{\itemindent}{.5in}
+
+\newcommand{\poneanswer}{%
+}
+\newcommand{\ptwoanswer}{%
+}
+\newcommand{\pthreeanswer}{%
+}
+\newcommand{\pfouranswer}{%
+}
+\newcommand{\pfiveanswer}{%
+}
+\newcommand{\psixanswer}{%
+}
+% \include{solutions}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  STUDENTS - Your homework begins here.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\pagestyle{empty}
+
+\homeworkdata{CMSC 250}{Fall 2022}{11}{Sunday 11 Dec.\ 11:59pm}
+
+{\Large \bf
+  \begin{center}
+  IMPORTANT
+  \end{center}
+
+  You can write your answers on any paper, either this paper
+  or blank paper, or write your answer in Latex (template of this homework can be downloaded through ELMS).
+  
+  When you upload your document to Gradescope, make sure you tag your questions.
+
+  \begin{center}
+    YOU WILL NEED TO TAG YOUR PROBLEMS!!!
+  \end{center}
+
+  Problems which are not correctly found will not be graded, this is a zero-tolerance policy. 
+
+  \begin{center}
+    IF YOU ARE WORRIED...
+  \end{center}
+
+  If you have concerns about tagging your problems,
+  We strongly suggest you drop by office hours and do it with a TA present so they can help you through the process,
+  just to see how it works. In addition, Gradescope has a tutorial: \url{https://help.gradescope.com/article/ccbpppziu9-student-submit-work#submitting_a_pdf}
+
+
+}
+
+\pagebreak
+
+\problem{Bayes}{20}
+
+\question{A factory produces a batch of toy vehicles, $3/8$ of which are cars and the rest of which are trucks. Trucks are defective 13\% of the time and cars are defective 4\% of the time. The quality inspector picks a toy vehicle at random from the batch and finds out that it is defective. What is the probability that the vehicle was a truck?
+}{10}
+
+$\displaystyle P(\text{truck} \mid \text{defective}) = \frac{P(\text{defective} \mid \text{truck})P(\text{truck})}{P(\text{defective})} = \frac{0.13 \cdot \frac{5}{8}}{0.13 \cdot \frac{5}{8} + 0.04 \cdot \frac{3}{8}} \approx 0.84$
+
+\bigskip
+
+\question{One night, a taxi hit another car and ran. The city has two taxi companies, one which has green taxis and another which has blue. The green taxi company owns 74\% of the cities' taxis and the blue taxi company owns the remaining 26\% of the taxis. A witness claimed that the taxi involved in the incident is blue. A test performed by court shows that the witness has 92\% accuracy when discriminating color in an emergency situation. What is the probability that the taxi involved in the incident is blue?}{10}
+
+$P(\text{right})$: probability that witness was right\\
+$P(\text{blue})$: probability that taxi was blue\\
+$P(\text{green})$: probability that taxi was green\\
+$P(\text{saw blue})$: probability that witness saw blue taxi
+
+\bigskip
+
+$P(\text{blue} \cap \text{right}) = 0.26 \cdot 0.92 = 0.2392$
+\begin{flalign*}
+    P(\text{blue} \mid \text{saw blue}) &= \frac{P(\text{blue} \cap \text{saw blue})}{P(\text{saw blue})} &\\
+    &= \frac{P(\text{blue} \cap \text{right})}{P(\text{blue} \cap \text{right}) + P(\text{green} \cap \text{wrong})}\\
+    &= \frac{P(\text{blue} \cap \text{right})}{P(\text{blue} \cap \text{right}) + P(\text{green})P(\text{wrong})}\\
+    &= \frac{0.2392}{0.2392 + 0.74 \cdot 0.08}\\
+    &\approx 0.80
+\end{flalign*}
+
+There's approximately an 80\% chance that the taxi involved in the incident is blue.
+
+\pagebreak
+
+\problem{Algorithm}{80}
+
+For this question, \textbf{do not} express answers in Big O notation; present your final anwer in polynomial form (for example, $3n^2 + 2n -5$). Remember to count additions and assignments in for loops.
+
+\question{What is the number of additions used in this segment of a pseudocode? 
+}{20}
+
+\begin{lstlisting}
+    t := 0
+    for i := 1 to n
+        for j := 1 to n
+            t := t + i + j
+\end{lstlisting}
+$n$ is a positive number.
+
+There are $n-1$ additions to increment $i$.\\
+There are $n(n-1)$ additions to increment $j$.\\
+$t = t + i + j$ has 2 additions, so the inner loop has $2(1 + n)$ additions, so the outer loop has $2(1+n)^2$ additions.
+
+Total additions: $n-1 + n(n-1) + 2(1+n)^2 = n - 1 + n^2 - n + 2 + 4n + 2n^2 = \fbox{1 + 4n + 3n^2}$
+
+\pagebreak
+
+
+\begin{lstlisting}
+
+    t := a list of n numbers
+    max := t[0]
+    for x in t:
+        if x > max:
+            max := x
+\end{lstlisting}
+$n$ is a positive number.
+
+\question{For the piece of code above, what is the number of assignments in the best case?}{15}
+
+In the best case, t[0] will be the max of t, so there will only be 2 assignments, one for initializing t and one for initializing max to t[0].
+
+\bigskip
+\bigskip
+\bigskip
+
+\question{For the piece of code above, what is the number of assignments in the worst case?}{10}
+
+In the worst case, t is strictly increasing, so there will be one assignment for each element in t (not including t[0]), which is $n-1$ assignments. So counting the initialization of t and max, there are $n-1+2=n+1$ assignments in all.
+
+\bigskip
+\bigskip
+\bigskip
+
+\question{For the piece of code above, what is the number of assignments in the average case if $P(t[i] > max) = 1 - \frac{1}{(i+1)^2}$? You can leave your answer in the form of a summation.}{15}
+
+There will always be the 2 assignments at the top for t and max.\\
+$P(t[i] > max)$ is the probability that there will be an assignment at index $i$. Adding up those probabilities gives you the expected number of assignments.\\
+$\displaystyle 2 + \sum_{i = 1}^{n-1} \left(1 - \frac{1}{(i+1)^2}\right) = 1 + n - \sum_{i = 1}^{n-1} \frac{1}{(i+1)^2}$
+
+
+\bigskip
+\bigskip
+\bigskip
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+

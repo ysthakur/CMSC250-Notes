@@ -1,0 +1,136 @@
+\documentclass[12pt, leqno]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+% Line before the therefore in proofs
+\newcommand{\proofline}{\rule{0.75in}{0.5pt}}
+% For set literals, wraps in {}
+\newcommand{\set}[1]{\{#1\}}
+% Powerset symbol
+\newcommand{\powerset}{\mathcal{P}}
+% Cardinality
+\newcommand{\card}[1]{\lvert #1 \rvert}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\evens}{\Z^{\mathrm{even}}}
+\newcommand{\odds}{\Z^{\mathrm{odd}}}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\title{Set Proofs}
+\author{Yash Thakur}
+\date{October 11, 2022}
+
+\begin{document}
+\counterwithout{equation}{section}
+
+\maketitle
+
+Useful facts/definitions:
+\begin{itemize}
+    \item Set equality: $A = B \Leftrightarrow (A \subseteq B) \land (B \subseteq A)$
+    \item Subset: $A \subseteq B (\forall x, x \in A \Rightarrow x \in B)$
+    \item Not subset: $A \not\subseteq B (\exists x, x \in A \land x \not\in B)$
+    \item $x \in X \cup Y \Leftrightarrow x \in X \lor x \in Y$
+    \item $x \in X \cap Y \Leftrightarrow x \in X \land x \in Y$
+    \item Set difference: $x \in X - Y \Leftrightarrow x \in X \land x \not\in Y$
+    \item $x \in X^c \Leftrightarrow x \not\in X$
+    \item $(x, y) \in X \times Y \Leftrightarrow x \in X \land y \in Y$
+\end{itemize}
+
+\section*{Set Identities}
+
+Commutative laws:
+\begin{itemize}
+    \item $A \cup B = B \cup A$
+    \item $A \cap B = B \cap A$
+\end{itemize}
+
+Associative laws:
+\begin{itemize}
+    \item $(A \cup B) \cup C = A \cup (B \cup C)$
+    \item $(A \cap B) \cap C = A \cap (B \cap C)$
+\end{itemize}
+
+Distributive laws:
+\begin{itemize}
+    \item $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$
+    \item $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$
+\end{itemize}
+
+Identity laws:
+\begin{itemize}
+    \item $A \cup \{\} = A$
+    \item $A \cap U = A$
+\end{itemize}
+
+Complement laws:
+\begin{itemize}
+    \item $A \cup A^c = U$
+    \item $A \cap A^c = \{\}$
+\end{itemize}
+
+Double complement law: $(A^c)^c = A$
+
+Idempotent laws:
+\begin{itemize}
+    \item $A \cup A = A$
+    \item $A \cap A = A$
+\end{itemize}
+
+Universal bound laws:
+\begin{itemize}
+    \item $A \cup U = U$
+    \item $A \cap \{\} = \{\}$
+\end{itemize}
+
+De Morgan's laws:
+\begin{itemize}
+    \item $(A \cup B)^c = A^c \cap B^c$
+    \item $(A \cap B)^c = A^c \cup B^c$
+\end{itemize}
+
+Absorption laws:
+\begin{itemize}
+    \item $A \cup (A \cap B) = A$
+    \item $A \cap (A \cup B) = A$
+\end{itemize}
+
+Complements of $U$ and $\{\}$:
+\begin{itemize}
+    \item $U^c = \{\}$
+    \item $\{\}^c = U$
+\end{itemize}
+
+Set difference law: $A - B = A \cap B^c$
+
+\section*{Proofs}
+
+\subsection*{Example proof 1}
+
+Prove $A - B = A \cap B^c$
+
+To do this, must show $A - B \subseteq A \cap B^c$ \emph{and} $A \cap B^c \subseteq A - B$
+
+\subsubsection*{Proving $A - B \subseteq A \cap B^c$}
+
+(actual proof is like other proofs from before, just didn't bother with it here)
+\begin{itemize}
+    \item $x \in A - B \Rightarrow x \in A \land x \not\in B$
+    \item $x \not\in B \Rightarrow x \in B^c$
+    \item $x \in A \land x \in B^c \Rightarrow x \in A \cap B^c$
+\end{itemize}
+
+Therefore, $A - B \subseteq A \cap B^c$ because every element in $A - B$ is in $A \cap B^c$.
+
+And the other part of the proof the same way.
+
+\subsection{Example proof 2}
+
+Disprove $A \cup B \subseteq A^c \cup B$
+
+Just come up with a counterexample.
+
+\end{document}

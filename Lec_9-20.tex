@@ -1,0 +1,39 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+\newcommand{\proofline}{\rule{0.75in}{0.5pt}}
+
+\begin{document}
+
+\section*{Number theory}
+
+\subsection*{Properties}
+
+\subsubsection*{Closure}
+
+The property of the result of an operation on the elements of some set still being in that set (e.g. addition of integers because $a + b$ is an integer for any integers $a$ and $b$)
+
+\subsubsection*{Parity}
+Property of an integer being even or odd\\
+$x$ is even iff $\exists k \in \mathbb Z, x = 2k$\\
+$x$ is odd iff $\exists k \in \mathbb Z, x = 2k + 1$
+
+\subsubsection*{Divisibility}
+$a \mid b$ means $a$ divides $b$ ($a \nmid b$ is the opposite)
+
+If $n,d \in \mathbb Z$ then $n$ is divisible by $d$ iff $n = kd$ for some $k \in \mathbb Z$ and $d \neq 0$\\
+In other words, $\forall n, d \in \mathbb Z [(d \mid n) \Leftrightarrow (\exists k \in \mathbb Z, n = dk \land d \neq 0)]$
+
+\subsection*{Primes}
+An integer $n$ is \textbf{prime} iff $n>1$ and for all positive integers $r$ and $s$, if $n = rs$, then either $r$ or $s$ equals $n$.\\
+An integer $n$ is \textbf{composite} iff $n>1$ and $n = rs$ for some integers $r$ and $s$ with $1<r<n$ and $1<s<n$.
+
+\subsection*{Modular Arithmetic}
+$x \bmod m = r$ iff $x = km + r$ where $k$ is an integer and  $0 \leq r < m$\\
+$a \equiv b \pmod{n} \Leftrightarrow n \mid (a - b)$
+
+\end{document}

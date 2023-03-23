@@ -1,0 +1,79 @@
+\documentclass[12pt, leqno]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+% Line before the therefore in proofs
+\newcommand{\proofline}{\rule{0.75in}{0.5pt}}
+% For set literals, wraps in {}
+\newcommand{\set}[1]{\{#1\}}
+% Powerset symbol
+\newcommand{\powerset}{\mathcal{P}}
+% Cardinality
+\newcommand{\card}[1]{\lvert #1 \rvert}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\evens}{\Z^{\mathrm{even}}}
+\newcommand{\odds}{\Z^{\mathrm{odd}}}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+% permutations
+\newcommand{\perm}[2]{{}_{#1}\mathrm{P}_{#2}}
+% combinations
+\newcommand{\comb}[2]{{}_{#1}\mathrm{C}_{#2}}
+
+\title{Combinatorics}
+\author{Yash Thakur}
+\date{November 10, 2022}
+
+\begin{document}
+\counterwithout{equation}{section}
+
+\maketitle
+
+\subsection*{Some terms}
+
+\textbf{Sample space:} the outcomes of something (for a coin flip, the sample space would be heads and tails)\\
+\textbf{Event:} A subset of a sample space\\
+\textbf{Random:} When it occurs, one outcome from a set of outcomes will occur, but it's impossible to know beforehand (a coin flip is a "random process")
+
+The sample space of flipping a coin and rolling a die combined is \{(heads, 1), (tails, 1), (heads, 2), ..., (heads, 6), (tails, 6)\}. In general, if $A$ is the sample space of one event and $B$ is the sample space of another event, the sample space of both events is $A \times B$.
+
+\textbf{Multiplication rule:} If $x$ and $y$ are independent events, with $A$ and $B$ being sample spaces respectively, the sample space of $x$ and $y$ is $A \times B$.
+
+\subsection*{Permutations}
+
+Number of permutations of size $r$ from set of size $n$: $\perm{n}{r} = \frac{n!}{(n - r)!}$
+
+In a permutation, order matters.
+
+\subsection*{Combinations}
+
+In a combination, order doesn't matter. It's just a group/set. Combinations are like permutations without repeats.
+
+$\comb{n}{r}$ means "using a group of size $n$, how many groups of size $r$ can be made?"
+
+$\displaystyle \comb{n}{r} = \frac{\perm{n}{r}}{r!} = \frac{n!}{(n-r)!r!}$ (divide by $r!$ to get rid of duplicate groups)
+
+\subsection*{Examples}
+
+\subsubsection*{How many anagrams of "aaabb"?}
+
+Want permutations but all a's are the same and b's are the same, so remove those. Divide by $3!$ for repeated a's, divide by $2!$ for repeated b's. Total anagrams: $\frac{\perm{5}{5}}{3!2!} = \frac{5!}{3!2!}$
+
+\subsubsection*{How many ways can you choose and arrange 6 people around a table (there are 10 people in total)?}
+
+The order in which you pick people matters, but since it's a table, rotating doesn't give you a new arrangement. So result is $\frac{\perm{10}{6}}{6}$
+
+\subsubsection*{Have 6 friends, can only invite 4, and 2 refuse to be separated so have to invite either both or neither. How many ways to invite 4 friends?}
+
+Combinations problem. Case 1: don't invite the pair, only 1 way to invite friends. Case 2: invite the pair, $\comb{4}{2} = 6$ ways to invite the rest. Total: 7.
+
+\subsubsection*{How many different ways to buy 7 sodas if there are only 3 types of sodas?}
+
+Think of it as putting two sticks between to divide into three groups. $\frac{9!}{2!7!} = 36$
+
+\end{document}

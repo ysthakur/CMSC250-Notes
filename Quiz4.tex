@@ -1,0 +1,101 @@
+\documentclass[12pt, leqno]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+\input{Commands}
+
+\title{Quiz 4}
+\author{Yash Thakur}
+\date{December 5, 2022}
+
+\begin{document}
+\counterwithout{equation}{section}
+
+\maketitle
+
+\pagebreak
+
+\section*{Problem 1: Counting}
+
+\begin{enumerate}
+    \item[(a)] Strings\\
+    Hexadecimal strings with length 3: $16^3$\\
+    Hexadecimal strings with length 6: $16^6$\\
+    There are $16^3 + 16^6$ hexadecimal strings with either length 3 or 6.
+    \item[(b)] Substrings\\
+    Each substrings could either have a `C' in it or not\\
+    Length of ``CMSC250'': 7\\
+    Length of ``MS250'': 5\\
+    Number of unique substrings of length 4 without `C': $\perm{5}{4}$\\
+    Number of unique substrings of length 4 with one or two `C's: $\comb{6}{3} \cdot 4! \cdot \frac{1}{2}$ (choose 3 letters apart from the `C', permute those 4 letters (including the `C'), then divide by 2 because the two `C's can be swapped)\\
+    Add those two together to get the total number:
+    \begin{flalign*}
+        \perm 5 4 + \comb{6}{3} \cdot 4! \cdot \frac{1}{2} &= \frac{5!}{1!} + \frac{6!}{3!3!} \cdot 4! \cdot \frac{1}{2} &\\
+        &= 5! + \frac{6 \cdot 5 \cdot 4}{3!} \cdot 4 \cdot 3 &\\
+        &= 5! + 5 \cdot 4 \cdot 4 \cdot 3 &\\
+        &= 5! + 2(5 \cdot 4 \cdot 3 \cdot 2) &\\
+        &= 5! + 2(5!) &\\
+        &= 3 \cdot 5! &\\
+        &= 3 \cdot 120 &\\
+        &= 360
+    \end{flalign*}
+    There are 360 unique substrings of length 4 in ``CMSC250''.
+    \item[(c)] Groups\\
+    Can subtract number of 6 people teams that we don't want from the total number of 6 people teams\\
+    Number of 6 people teams that have $A$ and $B$ but not $C$: $\comb{7}{4}$\\
+    Total number of 6 people teams: $\comb{10}{6}$\\
+    We can make $\comb{10}{6} - \comb{7}{4}$ teams satisfying the criteria.
+    \item[(d)] Candy Time\\
+    Can use stars and bars: $\comb{12 + 5 - 1}{5 - 1}$\\
+    There are $\comb{16}{4}$ ways to buy the candy.
+\end{enumerate}
+
+\pagebreak
+
+\section*{Problem 2: Probability}
+
+\begin{enumerate}
+    \item[(a)] Strings\\
+    Number of anagrams beginning with `C': $\frac{6!}{2}$ (divide by 2 because the `C's can be swapped)\\
+    Number of anagrams ending with 0: $\frac{6!}{2}$\\
+    Number of anagrams beginning with `C' and ending with 0: $\frac{5!}{2}$\\
+    Total number of anagrams: $\frac{7!}{2}$\\
+    Probability of an anagram beginning with `C' or ending with 0:
+    \begin{flalign*}
+        \frac{\frac{6!}{2} + \frac{6!}{2} - \frac{5!}{2}}{\frac{7!}{2}} &= \frac{6! + 6! - 5!}{7!} = \frac{6 + 6 - 1}{7 \cdot 6} = \frac{11}{42}&
+    \end{flalign*}
+    \item[(b)] Cards\\
+    After two draws, number of cards left: 28\\
+    Total number of odd cards at start: $3 \cdot 5 = 15$\\
+    One of the first two cards must've been odd, so one odd card is gone\\
+    Number of odd cards left: $15 - 1 = 14$\\
+    Probability of drawing odd card: $\frac{14}{28} = \frac 1 2$
+    \item[(c)] Expected value\\
+    Expected value from prime number (2, 3, 5): $\frac{3}{6} \cdot 3 = \frac{3}{2}$\\
+    Expected value from getting heads after rolling some non-prime number $n$: $\frac{1}{6} \cdot \frac 1 2 \cdot (-n)$\\
+    Expected value from getting tails after rolling some non-prime number $n$: $\frac{1}{6} \cdot \frac 1 2 \cdot n$\\
+    Total expected value from rolling some non-prime number $n$: $\frac{1}{6} \cdot \frac 1 2 \cdot (-n) + \frac{1}{6} \cdot \frac 1 2 \cdot n = 0$\\
+    If you roll a non-prime number, then the expected payoff is 0\\
+    So the expected payoff is \$1.5.
+    \item[(d)] Bayes\\
+    Define $A$ to mean the photo has a platypus and $B$ to mean the AI says the photo has a platypus.\\
+    According to question, $P(A) = 0.06$, $P(B \mid A) = 0.92$, and $P(B \mid A^c) = 0.15$\\
+    $P(A^c) = 1 - P(A) = 0.94$\\
+    $P(B) = P(B \mid A)P(A) + P(B \mid A^c)P(A^c) = (0.92)(0.06) + (0.15)(0.94)$\\
+    $P(B^c) = 1 - P(B) = 1 - (0.92)(0.06) - (0.15)(0.94)$\\
+    $P(A^c \cap B^c) = P(B^c \mid A^c)P(A^c) = (1 - P(B \mid A^c))P(A^c) = (0.85)(0.94)$\\
+    Answer: $\displaystyle P(A^c \mid B^c) = \frac{P(A^c \cap B^c)}{P(B^c)} = \frac{(0.85)(0.94)}{1 - (0.92)(0.06) - (0.15)(0.94)}$
+\end{enumerate}
+
+\pagebreak
+
+\section*{Problem 3: Extra Credit}
+
+There are $3^4 = 81$ ways to choose the colors of the cards.\\
+The sequence could start at any one of the numbers, so there are 9 possibilities for that\\
+So there are $\displaystyle \frac{81 \cdot 9}{4!}$ ways to choose cards satisfying the given conditions (divide by $4!$ because the order doesn't matter).
+
+\end{document}

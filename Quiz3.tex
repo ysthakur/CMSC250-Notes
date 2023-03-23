@@ -1,0 +1,149 @@
+\documentclass[12pt, leqno]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+% Line before the therefore in proofs
+\newcommand{\proofline}{\rule{0.75in}{0.5pt}}
+% For set literals, wraps in {}
+\newcommand{\set}[1]{\{#1\}}
+% Powerset symbol
+\newcommand{\powerset}{\mathcal{P}}
+% Cardinality
+\newcommand{\card}[1]{\lvert #1 \rvert}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\evens}{\Z^{\mathrm{even}}}
+\newcommand{\odds}{\Z^{\mathrm{odd}}}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+% permutations
+\newcommand{\perm}[2]{{}_{#1}\mathrm{P}_{#2}}
+% combinations
+\newcommand{\comb}[2]{{}_{#1}\mathrm{C}_{#2}}
+
+\title{Quiz 3}
+\author{Yash Thakur}
+\date{November 14, 2022}
+
+\begin{document}
+\counterwithout{equation}{section}
+
+\maketitle
+
+\pagebreak
+
+\section*{Problem 1}
+
+This can be proven using weak induction. Define $P(n)$ as $\displaystyle \prod_{i=1}^n i^2 = (n!)^2$
+
+\textbf{Base case:} $n = 1$\\
+$\displaystyle \prod_{i=1}^1 i^2 = 1^1 = (1!)^2$\\
+So $P(1)$ is true.
+
+\textbf{Inductive hypothesis:} Assume for some arbitrary $k \in \N^{\geq 1}$ that $P(k)$ is true.
+
+\textbf{Inductive step:}\\
+We want to show that $P(k+1)$ is true.
+
+\begin{flalign*}
+    \prod_{i=1}^{k+1} i^2 &= (k+1)^2 \cdot \prod_{i=1}^{k} i^2 & \text{(unfold product a little)}\\
+    &= (k+1)^2 \cdot (k!)^2 & \text{(by inductive hypothesis)} \\
+    &= (k+1)(k+1)(k!)(k!) \\
+    &= ((k+1)(k!)) \cdot ((k+1)(k!)) & \text{(commutativity \& associativity of $\cdot$)} \\
+    &= ((k+1)!) \cdot ((k+1)!) \\
+    &= ((k+1)!)^2
+\end{flalign*}
+
+Therefore, $P(k+1)$ is true. We have proven that $P(k) \Rightarrow P(k+1)$.
+
+\textbf{Conclusion:} By the Principle of Mathematical Induction, we have proven that \[\forall n \in \N^{\geq 1}, \prod_{i=1}^n i^2 = (n!)^2\]
+
+\pagebreak
+
+\section*{Problem 2}
+
+This can be proven using strong induction. Define $P(n)$ as a stamp with a value of $n$ cents being able to be paid for using only 3, 5, and 8 cent coins.
+
+\textbf{Base case:} $n = 8$\\
+A stamp of value 8 cents can be paid for using an 8 cent coin. Therefore, $P(8)$ is true.
+
+\textbf{Inductive hypothesis:} Assume for some arbitrary $k \in \N$ with $k \geq 8$ that $\forall i \in \N, 8 \leq i \leq k, P(i)$ is true.
+
+\textbf{Inductive step:}\\
+We want to show that $P(k+1)$, i.e., a stamp of value $k + 1$ can be paid for using only 3, 5, and 8 cent coins.
+
+Take the representation of $P(k)$. We can split into cases based on which coins were used to add up to $k$.
+
+\begin{itemize}
+    \item[\textbf{Case 1}:] There is an 8 cent coin used to pay for a stamp of value $k$\\
+    If that 8 cent coin is replaced with three 3 cent coins, the value becomes $k - 8 + 3 \cdot 3 = k + 1$\\
+    So a stamp of value $k+1$ can be paid for by taking the coins necessary for a stamp of value $k$, removing an 8 cent coin, and adding three 3 cent coins.
+    \item[\textbf{Case 2}:] There are no 8 cent coins, but there is a 5 cent coin used to pay for a stamp of value $k$\\
+    If that 5 cent coin is replaced with two 3 cent coins, the value becomes $k - 5 + 2 \cdot 3 = k + 1$\\
+    So a stamp of value $k+1$ can be paid for by taking the coins necessary for a stamp of value $k$, removing a 5 cent coin, and adding two 3 cent coins.
+    \item[\textbf{Case 3}:] There are no 8 cent or 5 cent coins, but there are 3 or more 3 cent coins used to pay for a stamp of value $k$\\
+    If those three 3 cent coins are replaced with two 5 cent coins, the value becomes $k - 3 \cdot 3 + 2 \cdot 5 = k + 1$\\
+    So a stamp of value $k+1$ can be paid for by taking the coins necessary for a stamp of value $k$, removing three 3 cent coins, and adding two 5 cent coins.
+    \item[\textbf{Case 4}:] There are no 8 cent or 5 cent coins, and there are fewer than three 3 cent coins used to pay for a stamp of value $k$.\\
+    Since there are fewer than three 3 cent coins, the most the coins for a stamp of value $k$ can add up to is 6 (using two 3 cent coins). However, $k \geq 8$ as stated in the inductive hypothesis, so this case is not possible.
+\end{itemize}
+In all cases, we get that a stamp of value $k+1$ can be paid for using only 3, 5, and 8 cent coins. Therefore, we have shown that $P(k+1)$ is true.
+
+\textbf{Conclusion:} By the Principle of Mathematical Induction, all stamps with a value of 8 cents or more can be paid for using only 3, 5, and 8 cent coins.
+
+\pagebreak
+
+\section*{Problem 3}
+
+\subsection*{Sets}
+
+This can be proven using structural induction. Define $P(s)$ to mean that $s$, which is an element of $S$, has twice as many `b's as `a's.
+
+\textbf{Base case:} $s = $``abb''\\
+``abb'' has 1 `a' and 2 `b's, so $P(abb)$ is true.
+
+\textbf{Inductive hypothesis:} Assume for an arbitrary $s \in S$ that $P(s)$ is true.
+
+\textbf{Inductive step:}\\
+To get a new element of $S$ from $s$, we do $asbb$ (using the definition of $S$). So we want to show that $P(asbb)$ is true.
+
+Let $x$ be the number of `a's in $s$. By the inductive hypothesis, the number of `b's in $s$ is $2x$. Then the number of `a's in $asbb$ is $x+1$, while the number of `b's in $asbb$ is $2x+1 = 2(x+1)$. So the number of `b's in $asbb$ is twice the number of `a's in $asbb$.
+
+Therefore, we have shown that $P(asbb)$.
+
+\textbf{Conclusion:} By the Principle of Mathematical Induction, we have shown that for all $s \in S$, $s$ has twice as many `b's as `a's.
+
+\pagebreak
+
+\subsection*{Linked lists}
+
+This can be proven using structural induction. Define $P(l)$ as $\displaystyle \mathrm{nodes}(l) = \frac{\mathrm{edges}(l) + 2}{2}$
+
+\textbf{Base case:} single node (call it $z$)\\
+$\mathrm{nodes}(z) = 1$ because it's the only node\\
+$\mathrm{edges}(z) = 0$ because there's no other nodes to connect to\\
+$\displaystyle \frac{\mathrm{edges}(z) + 2}{2} = \frac{0+2}{2} = 1 = \mathrm{nodes}(z)$\\ Therefore, $P(z)$ is true.
+
+\textbf{Inductive hypothesis:} Assume for an arbitrary doubly-linked list $l$ that $P(l)$ is true.
+
+\textbf{Inductive step:}
+To get a new doubly-linked list from $l$, we add another node $x$ that points to $l$ and make $l$'s head point to $x$. Call this new list $m$. We want to prove that $P(m)$ is true.
+
+Since only one node was added to $l$ to obtain $m$, $\mathrm{nodes}(m) = \mathrm{nodes}(l) + 1$\\
+Since two edges were added to $l$ to obtain $m$ (one from $x$ to the head of $l$ and one from the head of $l$ to $x$), $\mathrm{edges}(m) = \mathrm{edges}(l) + 2$
+\begin{flalign*}
+    \mathrm{nodes}(m) &= \mathrm{nodes}(l) + 1 & \\
+    &= \frac{\mathrm{edges}(l) + 2}{2} + 1 & \text{(inductive hypothesis)} \\
+    &= \frac{\mathrm{edges}(m)}{2} + 1 & \text{(substitution)} \\
+    &= \frac{\mathrm{edges}(m) + 2}{2} \\
+\end{flalign*}
+
+Therefore, $P(m)$ is true.
+
+\textbf{Conclusion:} By the Principle of Mathematical Induction, we have proven that for all doubly linked lists $l$, the following is true: \[\mathrm{nodes}(l) = \frac{\mathrm{edges}(l) + 2}{2}\]
+
+\end{document}

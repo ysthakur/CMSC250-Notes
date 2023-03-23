@@ -1,0 +1,38 @@
+\documentclass[12pt, leqno]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+\input{Commands}
+
+\title{Probability}
+\author{Yash Thakur}
+\date{November 15, 2022}
+
+\begin{document}
+\counterwithout{equation}{section}
+
+\maketitle
+
+\textbf{Definition:} If $S$ is a finite sample space in which all outcomes are equally likely and $E$ is an event in $S$, then the \textbf{probability} of $E$ is:
+\[P(E) = \frac{\text{the number of outcomes in }E}{\text{the total number of outcomes in }S}\]
+
+The probability will always be between 0 and 1 ($0 \leq P(E) \leq 1$).
+
+\textbf{Probability function} maps all events in a sample space $S$ to $\R$
+
+$P(A^c) = 1 - P(A)$
+
+If $A$ and $B$ are disjoint: $P(A \cup B) = P(A) + P(B)$\\
+In general: $P(A \cup B) = P(A) + P(B) - P(A \cap B)$
+
+Can negate a problem to make it easier
+
+\subsection*{Expected value}
+
+The \textbf{expected value} of an event is the probability of an event times its value:
+\[E = \sum_{i=1}^n p_i a_i\]
+
+\end{document}

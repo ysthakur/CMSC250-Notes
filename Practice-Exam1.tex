@@ -1,0 +1,372 @@
+\documentclass[12pt, leqno]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+% Line before the therefore in proofs
+\newcommand{\proofline}{\rule{0.75in}{0.5pt}}
+% For set literals, wraps in {}
+\newcommand{\set}[1]{\{#1\}}
+% Powerset symbol
+\newcommand{\powerset}{\mathcal{P}}
+% Cardinality
+\newcommand{\card}[1]{\lvert #1 \rvert}
+% Set of integers
+\newcommand{\Z}{\mathbb{Z}}
+% Set of even integers
+\newcommand{\evens}{\mathbb{Z}^{\mathrm{even}}}
+% Set of odd integers
+\newcommand{\odds}{\mathbb{Z}^{\mathrm{odd}}}
+
+\title{Practice problems for exam 1}
+\author{Yash Thakur}
+\date{September 30, 2022}
+
+\renewcommand{\labelenumi}{\theenumi}
+\renewcommand{\theenumi}{(\roman{enumi})}
+
+\begin{document}
+
+\maketitle
+
+\section{Statements}
+
+\subsection{Translations}
+
+\begin{enumerate}
+    \item $p \land q$
+    \item $p \land \neg q$
+    \item $q \Rightarrow r$
+    \item $(q \land r) \lor (\neg q \land \neg r)$
+    \item $(p \land \neg q \land \neg r) \lor (\neg p \land q \land \neg r) \lor (\neg p \land \neg q \land r)$
+\end{enumerate}
+
+\subsection{Implications}
+
+\begin{enumerate}
+    \item If CMSC250 is not fun, then I don't attend class.
+    \item If CMSC250 is fun, then I attend class.
+    \item If I don't attend class, then CMSC250 is not fun.
+    \item I don't attend class or CMSC250 is fun.
+\end{enumerate}
+
+\section{Truth Tables}
+
+Construct truth tables for the following:
+\begin{enumerate}
+    \item $(p \lor q) \land \neg r$\\
+    \begin{tabular}{ |c|c|c|c|c|c| }
+        \hline
+        $p$ & $q$ & $r$ & $p \lor q$ & $\neg r$ & $(p \lor q) \land \neg r$ \\ 
+        \hline
+        0 & 0 & 0 & 0 & 1 & 0 \\
+        \hline
+        0 & 0 & 1 & 0 & 0 & 0 \\
+        \hline
+        0 & 1 & 0 & 1 & 1 & 1 \\
+        \hline
+        0 & 1 & 1 & 1 & 0 & 0 \\
+        \hline
+        1 & 0 & 0 & 1 & 1 & 1 \\
+        \hline
+        1 & 0 & 1 & 1 & 0 & 0 \\
+        \hline
+        1 & 1 & 0 & 1 & 1 & 1 \\
+        \hline
+        1 & 1 & 1 & 1 & 0 & 0 \\
+        \hline
+    \end{tabular}
+    \item $(p \land q) \lor (\neg (z \land q))$\\
+    \begin{tabular}{ |c|c|c|c|c|c|c| }
+        \hline
+        $p$ & $q$ & $z$ & $p \land q$ & $z \land q$ & $\neg (z \land q)$ & $(p \land q) \lor (\neg (z \land q))$ \\
+        \hline
+        0 & 0 & 0 & 0 & 0 & 1 & 1 \\
+        \hline
+        0 & 0 & 1 & 0 & 0 & 1 & 1 \\
+        \hline
+        0 & 1 & 0 & 0 & 0 & 1 & 1 \\
+        \hline
+        0 & 1 & 1 & 0 & 1 & 0 & 0 \\
+        \hline
+        1 & 0 & 0 & 0 & 0 & 1 & 1 \\
+        \hline
+        1 & 0 & 1 & 0 & 0 & 1 & 1 \\
+        \hline
+        1 & 1 & 0 & 1 & 0 & 1 & 1 \\
+        \hline
+        1 & 1 & 1 & 1 & 1 & 0 & 1 \\
+        \hline
+    \end{tabular}
+\end{enumerate}
+
+\textbf{TODO the rest of this whole section!!!!!!!!!!!!!!!1}
+
+\section{Laws of Equivalence}
+
+\textbf{TODO this whole section!!!!!!!!!!!!!!!1}
+
+\subsection{Showing Equivalence}
+
+\begin{enumerate}
+    \item $p \Rightarrow q \equiv \neg (p \land \neg q)$
+
+    With laws of equivalence:
+    \begin{flalign*}
+        & p \Rightarrow q & \text{Assumption} & \\
+        & \equiv \neg p \lor q & \text{Definition of implication} & \\
+        & \equiv \neg (p \land \neg q) & \text{De Morgan's} &
+    \end{flalign*}
+
+    With truth tables:\\
+    \begin{tabular}{ |c|c|c|c|c|c|c| }
+        \hline
+        
+        \hline
+    \end{tabular}
+    \item $p \Rightarrow (q \lor r) \equiv (p \land \neg q) \Rightarrow r \equiv (p \land \neg r) \Rightarrow q$
+    
+    With laws of equivalence:
+    \begin{flalign*}
+        & p \Rightarrow (q \lor r) & \text{Assumption} & \\
+        & \neg p \lor (q \lor r) & \text{Definition of implication} \\
+        & (\neg p \lor q) \lor r & \text{Associativity} \\
+        & \neg (p \land \neg q) \lor r & \text{De Morgan's} \\
+        & (p \land \neg q) \Rightarrow r & \text{Definition of implication}
+    \end{flalign*}
+    \begin{flalign*}
+        & p \Rightarrow (q \lor r) & \text{Assumption} & \\
+        & \neg p \lor (q \lor r) & \text{Definition of implication} \\
+        & \neg p \lor (r \lor q) & \text{Commutativity} \\
+        & (\neg p \lor r) \lor q & \text{Associativity} \\
+        & \neg (p \land \neg r) \lor q & \text{De Morgan's} \\
+        & (p \land \neg r) \Rightarrow q & \text{Definition of implication} \\
+    \end{flalign*}
+
+    With truth tables:\\
+    \begin{tabular}{ |c|c|c|c|c|c|c| }
+        \hline
+        
+        \hline
+    \end{tabular}
+\end{enumerate}
+
+\section{Arguments}
+
+\subsection{Arguments and Validity}
+
+\textbf{TODO this whole section!!!!!!!!!!!!!!!1}
+
+\begin{enumerate}
+    \item First:
+    \begin{flalign}
+        & p \Leftrightarrow q & \text{Assumption} \\
+        & (p \Rightarrow q) \land (q \Rightarrow p) & \text{Definition of Biconditional (1)} \\
+        & p \Rightarrow q & \text{Specialization (2)}
+    \end{flalign}
+    \setcounter{equation}{0}
+
+    \item Second:
+    \begin{flalign}
+        & p \Rightarrow \neg z & \text{Assumption} \\
+        & z \land (p \lor r) & \text{Assumption} \\
+        & \neg q & \text{Assumption} \\
+        & \neg p \lor \neg z & \text{Definition of implication (1)} \\
+        & \neg (p \land z) & \text{De Morgan's (4)} \\
+        & \neg (z \land p) & \text{Commutativity (5)} \\
+        & (z \land p) \lor (z \land r) & \text{Distributive (2)} \\
+        & z \land r & \text{Dilemma (6, 7)} \\
+        & z & \text{Specialization (8)} \\
+        & \neg p & \text{Modus Tollens (1, 9)} \\
+        & \neg p \lor q & \text{Generalization (10)} \\
+        & p \Rightarrow q & \text{Definition of implication (11)}
+    \end{flalign}
+    \setcounter{equation}{0}
+
+    \item Third:
+    \begin{flalign}
+        & \neg s & \text{Assumption} \\
+        & r \lor \neg p & \text{Assumption} \\
+        & \neg p \Rightarrow s & \text{Assumption} \\
+        & \neg s \Rightarrow (\neg (\neg r \lor \neg k)) & \text{Assumption} \\
+        & \neg (\neg r \lor \neg k) & \text{Modus Ponens (1, 4)} \\
+        & r \land k & \text{De Morgan's (5)} \\
+        & r & \text{Specialization (6)} \\
+        & r \lor \neg k & \text{Generalization (7)}
+    \end{flalign}
+\end{enumerate}
+
+\section{Number Theory}
+
+\subsection{Parity}
+
+\begin{enumerate}
+    \item Show that 349 is odd.\\
+    $349 = 348 + 1 = 2(174) + 1$. 174 is an integer. Since 349 can be expressed as $2k + 1$, where $k$ is 174, it's odd.
+    \item Show that 768 is even.\\
+    $768 = 2(384)$. 384 is an integer. Since 768 can be expressed as $2k$, where $k$ is 384, it's even.
+    \item Prove informally that 602 is not odd.\\
+    $602 = 2(301)$. 301 is an integer. Since 602 can be expressed as $2k$, where $k$ is 301, it's even. Since it's even, it's not odd.
+    \item Prove informally that 61 is not even.\\
+    $61 = 60 + 1 = 2(30) + 1$. 30 is an integer. Since 61 can be expressed as $2k + 1$, where $k$ is 30, it's odd. Since it's odd, it's not even.
+\end{enumerate}
+
+\subsection{Primes}
+
+\textbf{TODO this section!@!@!!!!!!}
+
+\begin{enumerate}
+    \item 5
+\end{enumerate}
+
+\subsection{Divisiblity}
+
+\begin{enumerate}
+    \item Show that $6 \nmid 15$
+    \item Show that $13 \nmid 32$
+    \item Show that $16 \mid 48$
+    \item Show that $23 \mid 92$
+    \item Prove that if $a \mid 20$ and $100 | c$ then $a | c$
+    \begin{flalign}
+        & a | 20 & \text{Assumption} & \\
+        & 100 | c & \text{Assumption} & \\
+        & \exists k \in \Z, 20 = ak & \text{Definition of $\mid$ (1)} \\
+        & \exists j \in \Z, c = 100j & \text{Definition of $\mid$ (2)} \\
+        & c = 20 \cdot 5 \cdot j & \text{Arithmetic (4)} \\
+        & c = (ak) \cdot 5 \cdot j & \text{Substitution (3, 5)} \\
+        & c = (5jk)a & \text{Arithmetic (6)} \\
+        & a | c & \text{Definition of $\mid$ (7)}
+    \end{flalign}
+\end{enumerate}
+
+\subsection{Modular Arithmetic CS Version}
+
+\begin{enumerate}
+    \item $23 \equiv 5 \pmod{6}$
+    \item $-34 \equiv 1 \pmod{7}$
+    \item $8 \equiv 0 \pmod{8}$
+    \item $5 \equiv 1 \pmod{2}$
+\end{enumerate}
+
+\subsection{Modular Arithmetic Math Version}
+
+\begin{enumerate}
+    \item $23 \equiv 3 \pmod{5}$\\
+    True. $23 \equiv 3 \pmod{5} \Leftrightarrow 5 \mid (23 - 3) \Leftrightarrow 5 \mid 20 \Leftrightarrow \exists k \in \Z, 20 = 5k$. There does exist such a $k$, namely 4, so $23 \equiv 3 \pmod{5}$.
+    \item $12 \equiv -12 \pmod{8}$\\
+    True. $12 \equiv -12 \pmod{8} \Leftrightarrow 8 \mid (12 + 12) \Leftrightarrow 8 \mid 24 \Leftrightarrow \exists k \in \Z, 24 = 8k$. There does exist such a $k$, namely 3, so $12 \equiv -12 \pmod{8}$.
+    \item $56 \equiv -7 \pmod{3}$\\
+    True. $56 \equiv -7 \pmod{3} \Leftrightarrow 3 \mid (56 + 7) \Leftrightarrow 3 \mid 63 \Leftrightarrow \exists k \in \Z, 63 = 3k$. There does exist such a $k$, namely 12, so $56 \equiv -7 \pmod{3}$.
+    \item $26 \equiv 39 \pmod{13}$\\
+    True. $26 \equiv 39 \pmod{13} \Leftrightarrow 13 \mid (39 - 26) \Leftrightarrow 13 \mid 13 \Leftrightarrow \exists k \in \Z, 13 = 13k$. There does exist such a $k$, namely 1, so $26 \equiv 39 \pmod{13}$.
+\end{enumerate}
+
+\section{Quantifiers}
+
+\subsection{Translations}
+
+\begin{enumerate}
+    \item $\forall x \in P, L(x, \mathrm{Legos})$
+    \item $\exists x \in P, L(x, \mathrm{me})$
+    \item $\forall x \in P, \neg L(x, \mathrm{JS})$
+    \item $(\forall x \in P, \neg L(x, \mathrm{Cliff})) \Rightarrow G(\mathrm{Cliff})$
+    \item $(\forall x \in P, L(x, \mathrm{Cliff})) \Rightarrow \neg G(\mathrm{Cliff})$
+    \item $(\exists x \in P, L(x, \mathrm{Justin})) \Rightarrow \neg G(\mathrm{Justin})$
+    \item $\forall x \in P, L(\mathrm{Justin}, x)$
+\end{enumerate}
+
+\subsection{Negations}
+
+\begin{enumerate}
+    \item
+    \begin{flalign*}
+        & \neg (\forall x, y \in \Z, P(x) \land Q(y)) & & \\
+        & \equiv \exists x, y \in \Z, \neg(P(x) \land Q(y)) & \text{Universal negation} & \\
+        & \equiv \exists x, y \in \Z, P(x) \lor Q(y) & \text{De Morgan's} &
+    \end{flalign*}
+
+    \item
+    \begin{flalign*}
+        & \neg (\forall x \in \Z, \exists y \in \mathbb Q, P(x) \Rightarrow \neg Q(y)) & & \\
+        & \equiv \exists x \in \Z, \neg (\exists y \in \mathbb Q, P(x) \Rightarrow \neg Q(y)) & \text{Universal negation} & \\
+        & \equiv \exists x \in \Z, \forall y \in \mathbb Q, \neg (P(x) \Rightarrow \neg Q(y)) & \text{Existential negation} & \\
+        & \equiv \exists x \in \Z, \forall y \in \mathbb Q, \neg (\neg P(x) \lor \neg Q(y)) & \text{Definition of implication} & \\
+        & \equiv \exists x \in \Z, \forall y \in \mathbb Q, P(x) \land Q(y) & \text{De Morgan's} &
+    \end{flalign*}
+    \setcounter{equation}{0}
+\end{enumerate}
+
+\section{Proofs}
+
+\subsection{Direct Proofs}
+
+\begin{enumerate}
+    \item Let $a, b, c, d \in \Z$ and let $m \in \Z^{\geq 2}$.
+    \begin{flalign}
+        & (a \equiv b \pmod{m}) \land (c \equiv d \pmod{m}) & \text{Assumption} & \\
+        & a \equiv b \pmod{m} & \text{Specialization (1)} & \\
+        & c \equiv d \pmod{m} & \text{Specialization (1)} & \\
+        & m \mid (a - b) & \text{Definition of modular equivalence (2)} & \\
+        & m \mid (c - d) & \text{Definition of modular equivalence (3)} & \\
+        & \exists k \in \Z, a - b = km & \text{Definition of $\mid$ (4)} & \\
+        & \exists j \in \Z, c - d = jm & \text{Definition of $\mid$ (5)} & \\
+        & a = km + b & \text{Arithmetic (6)} & \\
+        & c = jm + d & \text{Arithmetic (7)} & \\
+        & ac = (km + b)(jm + d) & \text{Substitution (8, 9)} & \\
+        & ac = jkm^2 + bjm + dkm + bd & \text{Arithmetic (10)} & \\
+        & ac - bd = m(jkm + bj + dk) & \text{Arithmetic (11)} & \\
+        & jkm + bj + dk \in \Z & \text{Closure of $\Z$ under $+$ and $\cdot$} & \\
+        & m \mid (ac - bd) & \text{Definition of $\mid$ (12, 13)} & \\
+        & ac \equiv bd \pmod{m} & \text{Definition of modular equivalence (14)}
+    \end{flalign}
+    \setcounter{equation}{0}
+    
+    \item Let $x, y \in \mathbb Q$
+    \begin{flalign}
+        & y \neq 0 & \text{Assumption} & \\
+        & \exists p, q \in \Z, \frac p q = x & \text{Definition of $\mathbb Q$} \\
+        & \exists r, s \in \Z, \frac r s = y & \text{Definition of $\mathbb Q$} \\
+        & \frac x y = \frac{pr}{qs} & \text{Substitution (2, 3)} \\
+        & pr \in \Z & \text{Closure of $\Z$ over $\cdot$} \\
+        & qs \in \Z & \text{Closure of $\Z$ over $\cdot$} \\
+        & \frac x y \in \mathbb Q & \text{Definition of $\mathbb Q$ (4, 5, 6)}
+    \end{flalign}
+    \setcounter{equation}{0}
+    Thus, $\forall x, y \in \mathbb Q, y \neq 0 \Rightarrow \frac x y \in \mathbb Q$
+\end{enumerate}
+
+\subsection{Indirect Proofs}
+
+\subsubsection{Proof via contrapositive}
+
+\begin{enumerate}
+    \item This can be proven via contrapositive. The contrapositive is $\forall x, y \in \Z, x + y \in \Z^{\mathrm{odd}} \Rightarrow x^2 + y^2 \in \Z^{\mathrm{odd}}$.
+    
+    Let us take integers $x$ and $y$ such that $x + y$ is odd. $x$ is either even or odd and $y$ is either even or odd, so let's break into 3 cases for that.
+    
+    \textbf{Case 1:} $x, y \in \evens$
+    
+    Because $x \in \evens$, there exists an integer $k$ such that $x = 2k$. Because $y \in \evens$, there exists an integer $j$ such that $y = 2j$. Substituting in $k$ and $j$, $x + y = 2k + 2j = 2(k + j)$. Because $\Z$ is closed under addition, $k + j$ is an integer. Therefore, $2(k + j) = x + y$ is even. This produces a contradiction with the assumption that $x + y \in \odds$, so this case cannot be possible. From this contradiction, we can get anything, including $x^2 + y^2 \in \odds$.
+
+    \textbf{Case 2:} $x, y \in \odds$
+    
+    Because $x \in \odds$, there exists an integer $k$ such that $x = 2k + 1$. Because $y \in \odds$, there exists an integer $j$ such that $y = 2j + 1$. Substituting in $k$ and $j$, $x + y = 2k + 1 + 2j + 1 = 2(k + j + 1)$. Because $\Z$ is closed under addition, $k + j + 1$ is an integer. Therefore, $2(k + j + 1) = x + y$ is even. This produces a contradiction with the assumption that $x + y \in \odds$, so this case cannot be possible. From this contradiction, we can get anything, including $x^2 + y^2 \in \odds$.
+    
+    \textbf{Case 3:} $x \in \evens \land y \in \odds$ (WLOG, if $x \in \odds \land y \in \evens$, switch them)
+    
+    Because $x \in \evens$, there exists an integer $k$ such that $x = 2k$. Because $y \in \evens$, there exists an integer $j$ such that $y = 2j + 1$. Substituting in $k$ and $j$, $x^2 + y^2 = (2k)^2 + (2j + 1)^2 = 4k^2 + 4j^2 + 4j + 1 = 2(2k^2 + 2j^2 + 2j) + 1$. Because $\Z$ is closed under addition and multiplication, $2(2k^2 + 2j^2 + 2j) + 1 = x^2 + y^2 \in \odds$.
+    
+    In all cases, $x + y \in \evens \Rightarrow x^2 + y^2 \in \evens$. Since the contrapositive has been proven, the original statement is also true.
+\end{enumerate}
+
+\subsubsection{Proof via contradiction}
+
+\begin{enumerate}
+    \item Assume $\sqrt{2} \in \mathbb{R} - \mathbb{Q}$. Proving $(\sqrt{2} + 3)^2 \in \mathbb{R} - \mathbb{Q}$ can be done via contradiction.
+    
+    Assume $(\sqrt{2} + 3)^2 \in \mathbb{Q}$. By the definition of rationals, $\exists p, q \in \Z, \frac p q = (\sqrt{2} + 3)^2$. $\frac p q = (\sqrt{2} + 3)^2 = (\sqrt{2}^2 + 6\sqrt{2}) + 9 \in \mathbb Q$. Since the rationals are closed under addition, $(\sqrt{2}^2 + 6\sqrt{2})$ is also a rational. Since the rationals are closed under addition, $6\sqrt{2}$ is also a rational. Since the rationals are closed under multiplication, $\sqrt{2}$ is also a rational. This contradicts the earlier assumption that $\sqrt{2}$ is irrational. Therefore, it cannot be true that $(\sqrt{2} + 3)^2 \in \mathbb{Q}$.
+\end{enumerate}
+
+\end{document}

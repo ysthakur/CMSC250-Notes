@@ -1,0 +1,34 @@
+\documentclass[12pt, leqno]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+\input{Commands}
+
+\title{Bayes}
+\author{Yash Thakur}
+\date{December 1, 2022}
+
+\begin{document}
+\counterwithout{equation}{section}
+
+\maketitle
+
+\section*{Conditional probability}
+
+Probability of $A$ given that $B$ has already occurred:
+$\displaystyle P(A \mid B) = \frac{P(A \cap B)}{P(B)}$\\
+Rearranging gives $P(A \cap B) = P(A \mid B)P(B)$
+
+$P(A) = P(A \mid B)P(B) + P(A \mid B^c)P(B^c)$
+
+\section*{Bayes' Theorem}
+
+Combining the stuff from before: $\displaystyle P(A \mid B) = \frac{P(B \mid A)P(A)}{P(B)}$
+
+True positive rate: $P(\text{testing true} \mid \text{are sick})$\\
+False positive rate: $P(\text{testing true} \mid \text{not sick})$
+
+\end{document}

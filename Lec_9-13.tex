@@ -1,0 +1,30 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+\newcommand{\proofline}{\rule{0.75in}{0.5pt}}
+
+\begin{document}
+
+\section*{Truth tables to expressions}
+
+\subsection*{Disjunctive normal form (sum of products)}
+
+\begin{itemize}
+    \item Identify rows where output is \emph{true}
+    \item For each row, create expression (using $\land$) that made that row true
+    \item $\lor$ them all together
+\end{itemize}
+
+\subsection*{Conjunctive normal form (product of sums)}
+
+\begin{itemize}
+    \item Identify rows where output is \emph{false}
+    \item For each row, create expression (using $\lor$) that made that row false
+    \item $\land$ them all together
+\end{itemize}
+
+\end{document}

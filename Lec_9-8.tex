@@ -1,0 +1,88 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+\newcommand{\proofline}{\rule{0.75in}{0.5pt}}
+
+\begin{document}
+
+\section*{Arguments}
+
+\textbf{Definition}: Sequence of arguments ending in a conclusion.
+
+\begin{enumerate}
+    \item Called \textbf{sound} if and only if it is \textbf{valid} and all its premises are \textbf{true}.
+    \item Validity is a necessary condition for soundness.
+    \item Soundness is a sufficient condition for validity.
+\end{enumerate}
+
+\subsection*{Laws of inference}
+
+\subsubsection*{Modus ponens}
+If $p$, then $q$.\\
+$p$\\
+\proofline\\
+$\therefore q$
+
+\subsubsection*{Modus tollens}
+
+If p, then q.\\
+$\lnot q$\\
+\proofline\\
+$\therefore \lnot p$
+
+Example:\\
+If it is raining, then it is cloudy.\\
+It is not cloudy.\\
+Therefore, it is not raining.
+
+\subsubsection*{Generalization}
+$p$\\
+\proofline\\
+$\therefore p \lor q$
+
+\subsubsection*{Specialization}
+$p \land q$\\
+\proofline\\
+$\therefore p$
+
+\subsubsection*{Conjunction}
+$p$\\
+$q$\\
+\proofline\\
+$\therefore p \land q$
+
+\subsubsection*{Elimination}
+$p \lor q$\\
+$\lnot p$\\
+\proofline\\
+$\therefore q$
+
+\subsubsection*{Transitivity}
+$p \Rightarrow q$\\
+$q \Rightarrow r$\\
+\proofline\\
+$\therefore p \Rightarrow r$
+
+\subsubsection*{Cases}
+$p \lor q$\\
+$p \Rightarrow r$\\
+$q \Rightarrow r$\\
+\proofline\\
+$\therefore r$
+
+\subsubsection*{Contradiction}
+$\lnot p \Rightarrow 0$\\
+\proofline\\
+$\therefore p$
+
+\subsubsection*{Dilemma}
+$(p \Rightarrow q) \land (r \Rightarrow s)$\\
+$p \lor r$\\
+\proofline\\
+$\therefore q \lor s$
+
+\end{document}

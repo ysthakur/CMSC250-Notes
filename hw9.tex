@@ -1,0 +1,434 @@
+\documentclass[leqno]{article}
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\textwidth}{6in}
+\setlength{\topmargin}{-0.1in}
+\setlength{\textheight}{8.2in}
+
+%%%%%%%%%%%%%  IMPORT MACRO FILES AS NEEDED %%%%%%%%%%%
+\usepackage{amsgen,amsmath,amstext,amsbsy,amsopn,amssymb,amsthm,stackengine}
+\usepackage{array, nicefrac, mathtools}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{float,relsize,setspace,enumitem,pbox,cleveref,multicol,multirow}
+\usepackage{multido}
+\usepackage{bbding} % Has a checkmark symbol reachable through \Checkmark
+\usepackage{tikz,mdframed}
+% \usepackage{circuitikz}
+
+% Theorems, definitions, equations, lemmas
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{defn}{Definition}
+\newtheorem{rem}[thm]{Remark}
+\numberwithin{equation}{section}
+\newtheorem*{defn*}{Definition} % Theorem environments with no numbering
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{thm*}{Theorem}
+\theoremstyle{definition}
+\newtheorem*{fact}{Fact}
+
+\newcommand{\comb}[2]{_{#1}\mathrm{C}_{#2}}
+\newcommand{\perm}[2]{_{#1}\mathrm{P}_{#2}}
+
+% For negation and quantifiers in Discrete Math
+\newcommand{\shortsim}{\raise.17ex\hbox{$\scriptstyle \sim$}}
+\renewcommand{\neg}{\shortsim}
+\renewcommand{\nexists}{\neg(\exists}
+\newcommand{\nequiv}{\ensuremath{\not\equiv}}
+
+\newcommand{\myline}[1]{\underline{\hspace{#1}}}
+\newcommand*\emptycirc[1][1ex]{\tikz\draw (0,0) circle (#1);} 
+\newcounter{parts}
+\newcounter{problems}[parts]
+\newcounter{questions}[problems]
+\newcounter{subquestions}[questions]
+\newcommand{\hwpart}[1]{
+  \stepcounter{parts}
+  \noindent\makebox[\textwidth]{\LARGE \bf Part \arabic{parts} - #1}
+  \\
+}
+\newcommand{\problem}[2]{\stepcounter{problems}
+  {\Large \bf \noindent Problem \arabic{problems}: #1 \marginpar{[Total #2 pts]} \\[0.3cm]}}
+\newcommand{\question}[2]{\stepcounter{questions}
+  {\large (\alph{questions}) #1 \marginpar{[#2 pts]} \\[.3cm]}}
+\newcommand{\subquestion}[2]{\stepcounter{subquestions}
+  {\hspace{10pt}\emph{(\roman{subquestions}) #1 \marginpar{[#2 pts]} }\\[.3cm]}}
+
+% Solution formatting
+\newcommand{\solution}[1]{{\color{red}{#1}}}
+% Some standard centering and italicization of text.
+\newcommand{\frontrowcenter}[1]{\begin{center}{\em \Large  #1  }\end{center}}
+
+% A blank page
+\newcommand{\blankpage}{
+\clearpage
+\vspace*{\fill}
+\begin{minipage}{\textwidth}
+  \Large \textbf{THIS PAGE INTENTIONALLY LEFT BLANK}\\
+\end{minipage}
+\vfill % equivalent to \vspace{\fill}
+\clearpage
+}
+
+\newcommand{\answerspace}[1]{
+  \begin{center}
+    \textbf{BEGIN YOUR ANSWER BELOW THIS LINE} \\ \hrulefill \vspace{#1} \\ \hrulefill
+  \end{center}
+}
+
+\newcommand{\answerspacefullpage}{
+  \begin{center}
+    \textbf{BEGIN YOUR ANSWER BELOW THIS LINE} \\ \hrulefill \pagebreak
+  \end{center}
+}
+
+\newcommand{\additionalanswerspace}[1]{
+  \begin{center}
+    \textbf{CONTINUE YOUR ANSWER BELOW THIS LINE } \\ \hrulefill \vspace{#1} \\ \hrulefill
+  \end{center}
+}
+
+\newcommand{\additionalanswerspacefullpage}{
+  \begin{center}
+    \textbf{CONTINUE YOUR ANSWER BELOW THIS LINE} \\ \hrulefill \pagebreak
+  \end{center}
+}
+
+\newcommand{\freespace}[1]{
+  \begin{center}
+    \large \textbf{SCRAP SPACE BELOW} \\
+    \hrulefill
+    \pagebreak
+  \end{center}
+}
+
+% Centered line
+\newcommand{\mycenterline}[1]{
+  \begin{center}
+    \myline{#1}
+  \end{center}
+}
+
+% Space for T/F:
+\newcommand{\tfline}{\myline{.5cm}}
+
+% For quick parenthesized and italicized point annotation.
+\newcommand{\pts}[1]{{\em (#1 pts)}}
+\newcommand{\onept}{{\em (1 pt)}}
+
+% \item environments coupled with a line at the end, for students to write T and F in.
+\newcommand{\tfitem}[1]{\item #1 \null\hfill \framebox(25,25){} \\ \hdashrule{0.95\textwidth}{1pt}{2pt}}
+\newcommand{\setitem}[1]{\tfitem{$\curlybraces{#1}$} }
+\newcommand{\lineitem}[2]{\item #1 \null \hfill \myline{#2}}
+
+% Some circles and squares for students to fill in.
+\newcommand{\whitecircle}[1]{\tikz[baseline=-0.5ex]\draw[black, radius=#1] (0,0) circle ;}
+\newcommand{\whitesquare}[1]{\tikz\draw[black] (0,0) rectangl#1, #1) ;}
+
+% Emphasis
+\newcommand{\F}{$\mathbf{F}$}
+\newcommand{\T}{$\mathbf{T}$}
+\newcommand{\False}{\textbf{False}}
+\newcommand{\false}{\textbf{false}}
+\newcommand{\True}{\textbf{True}}
+\newcommand{\true}{\textbf{true}}
+\newcommand{\makered}[1]{\textcolor{red}{#1}}
+\newcommand{\Rbbst}{\textcolor{red}{Red}-black tree}
+\newcommand{\rbbst}{\textcolor{red}{red}-black tree}
+
+\newcommand{\homeworkdata}[4]{
+  \begin{mdframed}[linewidth=1pt]
+    \noindent\makebox[\textwidth]{\LARGE \bf #1, #2 }
+    \\\\
+    \noindent\makebox[\textwidth]{\Large \bf  Homework \##3 }
+    \\\\
+    \noindent\makebox[\textwidth]{\large \bf  Due: #4}
+    \\\\
+    \noindent\makebox[\textwidth]{\large \bf Homework will not be accepted late}
+  \end{mdframed}
+  \vspace{40pt}
+}
+
+\usepackage{circuitikz}
+
+\setlength{\parindent}{0em}
+\setlength{\itemindent}{.5in}
+
+\newcommand{\poneanswer}{%
+}
+\newcommand{\ptwoanswer}{%
+}
+\newcommand{\pthreeanswer}{%
+}
+\newcommand{\pfouranswer}{%
+}
+\newcommand{\pfiveanswer}{%
+}
+\newcommand{\psixanswer}{%
+}
+% \include{solutions}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  STUDENTS - Your homework begins here.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\pagestyle{empty}
+
+\homeworkdata{CMSC 250}{Fall 2022}{9}{Sunday 20 Nov.\ 11:59pm}
+
+{\Large \bf
+  \begin{center}
+  IMPORTANT
+  \end{center}
+
+  You can write your answers on any paper, either this paper
+  or blank paper, or write your answer in Latex (template of this homework can be downloaded through ELMS).
+  
+  When you upload your document to Gradescope, make sure you tag your questions.
+
+  \begin{center}
+    YOU WILL NEED TO TAG YOUR PROBLEMS!!!
+  \end{center}
+
+  Problems which are not correctly found will not be graded, this is a zero-tolerance policy. 
+
+  \begin{center}
+    IF YOU ARE WORRIED...
+  \end{center}
+
+  If you have concerns about tagging your problems,
+  We strongly suggest you drop by office hours and do it with a TA present so they can help you through the process,
+  just to see how it works. In addition, Gradescope has a tutorial: \url{https://help.gradescope.com/article/ccbpppziu9-student-submit-work#submitting_a_pdf}
+
+
+}
+
+\pagebreak
+
+\problem{Structural induction: A}{15}
+Define $S \subseteq \mathbb{Z} \times \mathbb{Z}$ recursively by:
+
+Basis step: $(0, 0) \in S.$
+
+Recursive step: If $(a, b) \in S$, then $(a + 2, 4b) \in S$ and $(2a, b + 4) \in S$.
+
+Use structural induction to show that $2 | a + b$ when $(a, b) \in S$.
+
+\bigskip
+
+\textbf{Proof:}\\
+This can be proven using structural induction by first proving that $\forall (a, b) \in S, P((a, b))$, where $P((a, b)) : 2 \mid a \land 2 \mid b$
+
+\bigskip
+
+\textbf{Base case:} $(a, b) = (0, 0)$\\
+$2 \mid 0$, so $2 \mid a$ and $2 \mid b$\\
+So $P((0, 0))$ is true.
+
+\bigskip
+
+\textbf{Inductive hypothesis:} Assume there exists some arbitrary $(a, b) \in S$ such that $P((a, b))$.
+
+\bigskip
+
+\textbf{Inductive step:}\\
+We wish to prove that $P((a + 2, 4b))$ and $P((2a, b + 4))$.\\
+\,\\
+Since $2 \mid a$, $\exists k \in \mathbb{Z}, a = 2k$. Since $2 \mid b$, $\exists j \in \mathbb{Z}, b = 2j$\\
+\,\\
+Proving $P((a + 2, 4b))$:\\
+$a + 2 = 2k + 2 = 2(k+1)$\\
+$k+1$ is an integer because the integers are closed under addition.\\
+Therefore, $2 \mid a + 2$\\
+$4b = 4(2j) = 2(4j)$\\
+$4j$ is an integer because the integers are closed under multiplication.\\
+Therefore, $2 \mid 4b$\\
+Since $2 \mid a+2$ and $2 \mid 4b$, $P((a+2, 4b))$ is true.
+\,\\
+Proving $P((2a, b + 4))$:\\
+$2a = 2(2k)$\\
+$2k$ is an integer because the integers are closed under multiplication.\\
+Therefore, $2 \mid 2a$\\
+$b + 4 = 2j + 4 = 2(j+2)$\\
+$j+2$ is an integer because the integers are closed under addition.\\
+Therefore, $2 \mid b+4$\\
+Since $2 \mid 2a$ and $2 \mid b+4$, $P((2a, b+4))$ is true.\\
+\,\\
+Hence, we have shown that the statement is true for this part.
+
+\bigskip
+
+\textbf{Conclusion:}\\
+By the principle of mathematical induction, we have shown that $2 \mid a \land 2 \mid b$ for all $(a, b) \in S$.
+
+\bigskip
+
+Since $2 \mid a$ and $2 \mid b$ for all $(a, b) \in S$, we know that $\forall (a, b) \in S, 2 \mid a + b$. Thus, the original statement has been proven.
+
+\pagebreak
+
+\problem{Structural induction: B}{15}
+
+A set of non-empty binary trees, $G$ is defined as the following:
+
+Basis step: A single node is in $G$.
+
+Recursive step: If $t_1$ and $t_2$ are in $G$, a tree formed by connecting $t_1$ and $t_2$ with a new node is in $G$.
+
+Use structural induction to prove that all trees in $G$ have the following property: if the tree has $n$ internal nodes (nodes that have child nodes), then there are $n+1$ leaf nodes (nodes that does not have child nodes).
+
+\bigskip
+
+\textbf{Proof:}\\
+This can be proven using structural induction. Define the predicate $P(t)$ to be the property that if the tree $t$ has $n$ internal nodes, then there are $n+1$ leaf nodes.
+
+\bigskip
+
+\textbf{Base case:} Single node\\
+There are 0 internal nodes, since there is only a single node. There is 1 leaf node, the single node. Therefore, $P(t)$ holds for this single node.
+
+\bigskip
+
+\textbf{Inductive hypothesis:}\\
+Assume that for some arbitrary trees $t_1$ and $t_1$ in $G$, $P(t_1)$ and $P(t_2)$ are true.
+
+\bigskip
+
+\textbf{Inductive step:}\\
+We wish to show that $P(t_3)$, where $t_3$ is the tree formed by connecting $t_1$ and $t_2$ with a new node.\\
+\,\\
+Let $n_1$ be the number of internal nodes in $t_1$ and let $n_2$ be the number of internal nodes in $t_2$.\\
+Then $t_3$ has $n_1+n_2+1$ internal nodes, since a new node was added to connect $t_1$ and $t_2$.\\
+Also, the number of leaf nodes in $t_3$ is just the sum of the leaf nodes in $t_1$ and $t_2$ (since no leaf nodes were added or deleted), which is $(n_1 + 1) + (n_2 + 1) = (n_1 + n_2 + 1) + 1$ by the inductive hypothesis.\\
+\,\\
+Since the number of internal nodes in $t_3$ is 1 less than the number of leaf nodes in $t_3$, $P(t_3)$ holds.
+
+\bigskip
+
+\textbf{Conclusion:}\\
+By the principal of mathematical induction, we have proven that $P(t)$ holds for all trees in $G$, i.e., all trees in $G$ have the property that if the tree has $n$ internal nodes, then it will have $n+1$ leaf nodes.
+
+\pagebreak
+
+\problem{Counting A}{50}
+
+For the following questions, show your work AND calculate the final answer.
+
+\bigskip
+\bigskip
+
+\question{How many bit strings of length eight contain either three consecutive 0s or four consecutive 1s?}{10}
+
+Split into three pieces: how many have 000, how many have 1111, how many have both?
+
+\bigskip
+
+Part 1: How many contain 000?\\
+If the 000 is at index 0, there are $2^5$ possibilities\\
+If the 000 is at index 1, there are $2^4$ possibilities (only 4 places left because you put a 1 before the 000)\\
+If the 000 is at index 2, there are $2^4$ possibilities (same reason as before)\\
+If the 000 is at index 3, there are $2^4$ possibilities (same reason as before)\\
+If the 000 is at index 4, there are $2^4 - 2$ possibilities (same reason as before, plus there could be an extra 000 at index 0)\\
+If the 000 is at index 5, there are $2^4 - 2 - 1$ possibilities (same reason as before, plus there could be an extra 000 at index 1)\\
+In total, there are $2^5 + 5 \cdot 2^4 - 2 - 2 - 1 = 107$
+
+\bigskip
+
+Part 2: How many contain 1111?\\
+If the 1111 is at index 0, there are $2^4$ possibilities\\
+If the 1111 is at index 1, there are $2^3$ possibilities (only 3 places left because you put a 0 before the 1111)\\
+If the 1111 is at index 2, there are $2^3$ possibilities (so there isn't an extra 1 before)\\
+If the 1111 is at index 3, there are $2^3$ possibilities\\
+If the 1111 is at index 4, there are $2^3$ possibilities\\
+In total, there are $2^4 - 4 \cdot 2^3 = 48$
+
+\bigskip
+
+How many contain both 000 and 1111?\\
+The 000 could come before or after the 1111, there are 2 places for the 8th bit to be, index 0 or 7, and it could be either a 0 or 1, so that's $2+2+2=8$ possibilities
+
+\bigskip
+
+Combining the three parts, we get $107 + 48 - 8 = 147$
+
+\bigskip
+\bigskip
+\bigskip
+
+\question{ $A + B + C + D + E = 20$, where $A, B, C, D, E \in \mathbb{N}$. How many combinations are there for $A, B, C, D, E$?}{10}
+
+Imagine there are 20 stones in a row with spaces between them. You can divide those stones into 5 groups by putting 4 sticks at various places between them. There are 24 places to put sticks. So there are $\comb{24}{4} = \frac{24!}{4!20!} = 10626$ ways to make groups.
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+\question{How many permutations of the letters 'superintendent' contain the string 'rint'?}{10}
+
+Treat "rint" kinda like one letter\\
+Length of "supe(rint)endent": 11\\
+Permutations of "supe(rint)endent" (with repetition): $11!$\\
+Divide by $3!$ to get rid of duplicate e's and $2!$ to get rid of duplicate n's:\\
+$\displaystyle \frac{11!}{3!2!} = \frac{11 \cdot 9 \cdot 8 \cdot 7 \cdot 6 \cdot 5 \cdot 4}{2!} = 11 \cdot 9 \cdot 8 \cdot 7 \cdot 6 \cdot 5 \cdot 2 = 332640$
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+\question{How many permutations of the letters 'superintendent' contain the string 'unn'?}{10}
+
+Treat "unn" kinda like one letter\\
+Length of "(unn)speritedent": 12\\
+Permutations of "(unn)speritedent" (with repetition): $12!$\\
+Divide by $3!$ to get rid of duplicate e's:\\
+$\displaystyle \frac{12!}{3!} = 12 \cdot 11 \cdot 10 \cdot 9 \cdot 8 \cdot 7 \cdot 6 \cdot 5 \cdot 4 = 79833600$
+
+\pagebreak
+
+\problem{Counting B}{30}
+
+You and your seven friends want to get on the Carousel Ride in the amusement park. It has 4 seats and the Carousel spins. Each seat can only sit 1 person, and no seats should be empty during a ride. You want to make sure that everyone gets to ride once and only once. Some people in your group of ten are not very friendly and they have special requests.
+
+Note: Only consider relative ordering for placement within one ride (for example, if each person is represented as a letter, then [ABCD] and [BCDA] are considered as one arrangement). Taking the first ride is different than taking the second ride ([ABCD, EFGH] and [EFGH, ABCD] are two arrangements).
+
+\bigskip
+\bigskip
+
+\question{Among the eight of you, Alice and Bob do not get along, so they don't want to ride the Carousel at the same time. How many ways can you arrange people in the two rides and satisfy the constraints?}{15}
+
+The remaining 6 friends other than Alice and Bob will have to be split between the 2 rides. There are $\displaystyle \comb{6}{3} = \frac{6!}{3!3!} = \frac{6 \cdot 5 \cdot 4}{3 \cdot 2} = 20$ ways to do that.\\
+\,\\
+On each ride, there are $\perm{4}{4}$ ways to order people, but since it's a circle, it needs to be divided by 4 to remove duplicate arrangements that are just other arrangements rotated. So that's $\displaystyle \frac{4!}{4} = 3! = 6$ ways to arrange the people in each ride.\\
+\,\\
+Alice can either be on the first ride or the second, so that's 2 possibilities.\\
+\,\\
+Multiplying all of that together, you get $20 \cdot 6 \cdot 2 = 240$
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+\question{Among the eight of you, Chalice doesn’t want to sit on a horse adjacent to yours, but he can be in the same ride as you. How many ways can you arrange people in the two rides and satisfy the constraints?}{15}
+
+Chalice can either be on the same ride as you (where there is only one possible space) or on another ride, so that's 2 possibilities. There are 6 places for the rest to sit, which is $6!$ different arrangements. Combining Chalice, that's $2 \cdot 6!$. But since the people on  ride can be rotated, we need to divide by 4 to get rid of duplicates, so it's $\displaystyle \frac{2 \cdot 6!}{4}$. Also, you could either be on the first or second ride, so it needs to be multiplied by 2, giving\\
+$\displaystyle \frac{2 \cdot 2 \cdot 6!}{4} = 6! = 720$
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+

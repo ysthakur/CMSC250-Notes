@@ -1,0 +1,74 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+% Line before the therefore in proofs
+\newcommand{\proofline}{\rule{0.75in}{0.5pt}}
+% For set literals, wraps in {}
+\newcommand{\set}[1]{\{#1\}}
+% Powerset symbol
+\newcommand{\powerset}{\mathcal{P}}
+% Cardinality
+\newcommand{\card}[1]{\lvert #1 \rvert}
+
+\title{Relations and Functions}
+\author{Yash Thakur}
+\date{September 29 and October 6, 2022}
+
+\begin{document}
+
+\maketitle
+
+\section*{Relations}
+
+A \textbf{relation} $R$ from set $A$ to set $B$ is any subset of $A \times B$. It's like a function but with multiple outputs for a single input.
+
+Given $(x, y) \in (A \times B)$,
+\begin{itemize}
+    \item would say $x$ is related to $y$ by $R$
+    \item $x R y$ means $(x, y) \in R$
+    \item Set $A$ is the \textbf{domain} of $R$
+    \item Set $B$ is the \textbf{co-domain} of $R$
+\end{itemize}
+
+\subsubsection*{Example relation}
+$A = \set{1, 2, 3}$\\
+$B = \set{1, 3, 5}$\\
+$S\colon \set{(x, y) \mid x < y} \subseteq A \times B$\\
+$S = \set{(1, 3), (1, 5), (2, 3), (2, 5), (3, 5)}$
+
+\subsubsection*{Example relation: sum relation}
+$R\colon \set{((x, y), z) \mid x + y = z} \subseteq (\mathbb Z \times \mathbb Z) \times \mathbb Z$
+
+$((3, 6), 9) \in R$, $((6, 3), 9) \in R$
+
+\subsubsection*{Properties relations can have}
+\begin{enumerate}
+    \item Reflexivity - Relation $R$ is reflexive iff $\forall x \in A, x R x$
+    \item Symmetry - Relation $R$ is symmetric iff $\forall x, y \in A, x R y \Rightarrow y R x$
+    \item Transitivity - Relation $R$ is transitive iff $\forall x,y,z \in A, x R y \Rightarrow y R z \Rightarrow x R z$
+\end{enumerate}
+
+\section*{Functions}
+
+A \textbf{function} from set $X$ to set $Y$, denoted $f\colon X \mapsto Y$, is a relation from $X$ to $Y$ that satisfies:
+\begin{enumerate}
+    \item Every element in $X$ is related to some function in $Y$ - $\forall x \in X, \exists y \in Y, f\colon x \mapsto y$
+    \item No element in $X$ is related to more than one element in $Y$ - $\forall x \in X, \exists! y \in Y, f\colon x \mapsto y$
+\end{enumerate}
+
+Make sure to adjust codomain so that not inconsistent.
+
+If $f\colon X \mapsto Y$ and $g\colon X \mapsto Y$ are functions, then $f=g$ iff $\forall x, f(x) = g(x)$
+
+Properties functions can have:
+\begin{enumerate}
+    \item Surjectivity (onto): $\forall y \in Y, \exists x \in X, y = f(x)$
+    \item Injectivity (1-1): $\forall x_1, x_2 \in X, (f(x_1) = f(x_2)) \Rightarrow x_1 = x_2$
+    \item Bijectivity (bijection/1-1 correspondence): Both surjective and injective (can get inverse)
+\end{enumerate}
+
+\end{document}

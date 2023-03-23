@@ -1,0 +1,55 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+\newcommand{\proofline}{\rule{0.75in}{0.5pt}}
+
+\begin{document}
+
+\section*{Sets and Predicates}
+
+\subsection*{Quantifiers}
+
+Universal quantifier: $\forall$\\
+Existential quantifier: $\exists$\\
+Uniqueness quantifier: $\exists!$. There exists exactly one
+
+Negation kinda uses DeMorgan's.
+
+\subsection*{Predicates}
+
+\textbf{Predicate:} A sentence that contains a finite number of variables and becomes a statement when specific values are substituted for the variables.
+
+\textbf{Domain:} A set of all values that may be substituted in place of the variable.
+
+\begin{enumerate}
+    \item $\mathbb N$: $\{0, 1, 2, 3, ...\}$
+    \item $\mathbb{Z}$: Integers
+\end{enumerate}
+
+\subsection*{Sets}
+
+$U$ is the \textbf{universal set}, the set of all the stuff we're talking about.
+
+$\varnothing$ is the empty set ($\{\}$).
+
+Set builder notation: $\{ x \in S \mid P(x) \}$\\
+Interval notation: $\{x \in \mathbb R \mid 1 \leq x \leq 2\}$
+
+Subset: $A \subseteq B \Leftrightarrow (x \in A \Rightarrow x \in B)$\\
+Equality: $A = B \Leftrightarrow ((A \subseteq B) \land (B \subseteq A))$\\
+Proper subset: $A \subset B \Leftrightarrow ((x \in A \Rightarrow x \in B) \land (\exists y \in B, y \not\in A))$
+
+Union: $A \cup B: \{x \in U | x \in A \lor x \in B\}$\\
+Intersection: $\cap$
+
+\textbf{Disjoint sets} are two sets that have no elements in common.
+
+Set complement: $A' = \{x \in U \mid x \not\in A \}$
+
+Set difference (a.k.a. relative complement): $B - A = \{x \mid (x \in B) \land (x \not\in A)\}$ (sometimes written $B\backslash A$)
+
+\end{document}

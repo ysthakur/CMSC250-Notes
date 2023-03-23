@@ -1,0 +1,394 @@
+\documentclass[leqno]{article}
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\textwidth}{6in}
+\setlength{\topmargin}{-0.1in}
+\setlength{\textheight}{8.2in}
+
+%%%%%%%%%%%%%  IMPORT MACRO FILES AS NEEDED %%%%%%%%%%%
+\usepackage{amsgen,amsmath,amstext,amsbsy,amsopn,amssymb,amsthm,stackengine}
+\usepackage{array, nicefrac, mathtools}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{float,relsize,setspace,enumitem,pbox,cleveref,multicol,multirow}
+\usepackage{multido}
+\usepackage{bbding} % Has a checkmark symbol reachable through \Checkmark
+\usepackage{tikz,mdframed}
+% \usepackage{circuitikz}
+
+% Theorems, definitions, equations, lemmas
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{defn}{Definition}
+\newtheorem{rem}[thm]{Remark}
+\numberwithin{equation}{section}
+\newtheorem*{defn*}{Definition} % Theorem environments with no numbering
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{thm*}{Theorem}
+\theoremstyle{definition}
+\newtheorem*{fact}{Fact}
+
+% For negation and quantifiers in Discrete Math
+\newcommand{\shortsim}{\raise.17ex\hbox{$\scriptstyle \sim$}}
+\renewcommand{\neg}{\shortsim}
+\renewcommand{\nexists}{\neg(\exists}
+\newcommand{\nequiv}{\ensuremath{\not\equiv}}
+
+\newcommand{\myline}[1]{\underline{\hspace{#1}}}
+\newcommand*\emptycirc[1][1ex]{\tikz\draw (0,0) circle (#1);} 
+\newcounter{parts}
+\newcounter{problems}[parts]
+\newcounter{questions}[problems]
+\newcounter{subquestions}[questions]
+\newcommand{\hwpart}[1]{
+  \stepcounter{parts}
+  \noindent\makebox[\textwidth]{\LARGE \bf Part \arabic{parts} - #1}
+  \\
+}
+\newcommand{\problem}[2]{\stepcounter{problems}
+  {\Large \bf \noindent Problem \arabic{problems}: #1 \marginpar{[Total #2 pts]} \\[0.3cm]}}
+\newcommand{\question}[2]{\stepcounter{questions}
+  {\large (\alph{questions}) #1 \marginpar{[#2 pts]} \\[.3cm]}}
+\newcommand{\subquestion}[2]{\stepcounter{subquestions}
+  {\hspace{10pt}\emph{(\roman{subquestions}) #1 \marginpar{[#2 pts]} }\\[.3cm]}}
+
+% Solution formatting
+\newcommand{\solution}[1]{{\color{red}{#1}}}
+% Some standard centering and italicization of text.
+\newcommand{\frontrowcenter}[1]{\begin{center}{\em \Large  #1  }\end{center}}
+
+% A blank page
+\newcommand{\blankpage}{
+\clearpage
+\vspace*{\fill}
+\begin{minipage}{\textwidth}
+  \Large \textbf{THIS PAGE INTENTIONALLY LEFT BLANK}\\
+\end{minipage}
+\vfill % equivalent to \vspace{\fill}
+\clearpage
+}
+
+\newcommand{\answerspace}[1]{
+  \begin{center}
+    \textbf{BEGIN YOUR ANSWER BELOW THIS LINE} \\ \hrulefill \vspace{#1} \\ \hrulefill
+  \end{center}
+}
+
+\newcommand{\answerspacefullpage}{
+  \begin{center}
+    \textbf{BEGIN YOUR ANSWER BELOW THIS LINE} \\ \hrulefill \pagebreak
+  \end{center}
+}
+
+\newcommand{\additionalanswerspace}[1]{
+  \begin{center}
+    \textbf{CONTINUE YOUR ANSWER BELOW THIS LINE } \\ \hrulefill \vspace{#1} \\ \hrulefill
+  \end{center}
+}
+
+\newcommand{\additionalanswerspacefullpage}{
+  \begin{center}
+    \textbf{CONTINUE YOUR ANSWER BELOW THIS LINE} \\ \hrulefill \pagebreak
+  \end{center}
+}
+
+\newcommand{\freespace}[1]{
+  \begin{center}
+    \large \textbf{SCRAP SPACE BELOW} \\
+    \hrulefill
+    \pagebreak
+  \end{center}
+}
+
+% Centered line
+\newcommand{\mycenterline}[1]{
+  \begin{center}
+    \myline{#1}
+  \end{center}
+}
+
+% Space for T/F:
+\newcommand{\tfline}{\myline{.5cm}}
+
+% For quick parenthesized and italicized point annotation.
+\newcommand{\pts}[1]{{\em (#1 pts)}}
+\newcommand{\onept}{{\em (1 pt)}}
+
+% \item environments coupled with a line at the end, for students to write T and F in.
+\newcommand{\tfitem}[1]{\item #1 \null\hfill \framebox(25,25){} \\ \hdashrule{0.95\textwidth}{1pt}{2pt}}
+\newcommand{\setitem}[1]{\tfitem{$\curlybraces{#1}$} }
+\newcommand{\lineitem}[2]{\item #1 \null \hfill \myline{#2}}
+
+% Some circles and squares for students to fill in.
+\newcommand{\whitecircle}[1]{\tikz[baseline=-0.5ex]\draw[black, radius=#1] (0,0) circle ;}
+\newcommand{\whitesquare}[1]{\tikz\draw[black] (0,0) rectangl#1, #1) ;}
+
+% Emphasis
+\newcommand{\F}{$\mathbf{F}$}
+\newcommand{\T}{$\mathbf{T}$}
+\newcommand{\False}{\textbf{False}}
+\newcommand{\false}{\textbf{false}}
+\newcommand{\True}{\textbf{True}}
+\newcommand{\true}{\textbf{true}}
+\newcommand{\makered}[1]{\textcolor{red}{#1}}
+\newcommand{\Rbbst}{\textcolor{red}{Red}-black tree}
+\newcommand{\rbbst}{\textcolor{red}{red}-black tree}
+
+\newcommand{\homeworkdata}[4]{
+  \begin{mdframed}[linewidth=1pt]
+    \noindent\makebox[\textwidth]{\LARGE \bf #1, #2 }
+    \\\\
+    \noindent\makebox[\textwidth]{\Large \bf  Homework \##3 }
+    \\\\
+    \noindent\makebox[\textwidth]{\large \bf  Due: #4}
+    \\\\
+    \noindent\makebox[\textwidth]{\large \bf Homework will not be accepted late}
+  \end{mdframed}
+  \vspace{40pt}
+}
+
+\usepackage{circuitikz}
+
+\setlength{\parindent}{0em}
+\setlength{\itemindent}{.5in}
+
+\newcommand{\poneanswer}{%
+}
+\newcommand{\ptwoanswer}{%
+}
+\newcommand{\pthreeanswer}{%
+}
+\newcommand{\pfouranswer}{%
+}
+\newcommand{\pfiveanswer}{%
+}
+\newcommand{\psixanswer}{%
+}
+% \include{solutions}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  STUDENTS - Your homework begins here.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\pagestyle{empty}
+
+\homeworkdata{CMSC 250}{Fall 2022}{6}{Sunday 23 Oct.\ 11:59pm}
+
+{\Large \bf
+  \begin{center}
+  IMPORTANT
+  \end{center}
+
+  You can write your answers on any paper, either this paper
+  or blank paper, or write your answer in Latex (template of this homework can be downloaded through ELMS).
+  
+  When you upload your document to Gradescope, make sure you tag your questions.
+
+  \begin{center}
+    YOU WILL NEED TO TAG YOUR PROBLEMS!!!
+  \end{center}
+
+  Problems which are not correctly found will not be graded, this is a zero-tolerance policy. 
+
+  \begin{center}
+    IF YOU ARE WORRIED...
+  \end{center}
+
+  If you have concerns about tagging your problems,
+  We strongly suggest you drop by office hours and do it with a TA present so they can help you through the process,
+  just to see how it works. In addition, Gradescope has a tutorial: \url{https://help.gradescope.com/article/ccbpppziu9-student-submit-work#submitting_a_pdf}
+
+
+}
+
+\pagebreak
+
+\problem{Set Proof}{70}
+
+\question{Suppose that $A, B, C$ and $D$ are sets, where $A \subseteq C$ and $B \subseteq D$. Is $A \times B \subseteq C \times D $ true? Prove or disprove the statement.}{14}
+\bigskip
+\bigskip
+\textbf{Answer:} \\
+Take an $(x, y)$ in $A \times B$. By the definition of $A \times B$, $x \in A \land y \in B$. Since $A \subseteq C$, $x \in C$. Since $B \subseteq D$, $y \in D$. Since $x \in C \land y \in D$, by the definition of cartesian product, $(x, y) \in C \times D$.\\
+\,\\
+Since $\forall (x, y) \in A \times B, (x, y) \in C \times D$, we get $A \times B \subseteq C \times D$.
+
+\pagebreak
+
+\question{Suppose that $A$ and $B$ are sets. Is $A \cap B = A \Rightarrow A \subseteq B$ true? Prove or disprove the statement.}{14}
+\bigskip
+\bigskip
+\textbf{Answer:}
+\counterwithout{equation}{section}
+\begin{flalign}
+    & A \cap B = A & \text{Assumption} & \\
+    & A \cap B \subseteq A \land A \subseteq A \cap B & \text{Double containment (1)} & \\
+    & A \subseteq A \cap B & \text{Specialization (2)} \\
+    & \forall x \in A, x \in A \cap B & \text{Definition of $\subseteq$ (3)} \\
+    & \forall x \in A, x \in A \land x \in B & \text{Definition of $\cap$ (4)} \\
+    & \forall x \in A, x \in B & \text{Specialization (5)} \\
+    & A \subseteq B & \text{Definition of $\subseteq$ (6)}
+\end{flalign}
+\setcounter{equation}{0}
+Therefore, $A \cap B = A \Rightarrow A \subseteq B$ is true.
+
+\pagebreak
+
+\question{Prove that $\{x \in Z| (21 | x)\} \subseteq \{x \in  Z| (7 | x)\} $ }{14}
+\bigskip
+\bigskip
+\textbf{Answer:}
+
+\newcommand{\Z}{\mathbb{Z}}
+To prove $\{x \in \Z \mid (21 \mid x)\} \subseteq \{x \in  \Z \mid (7 \mid x)\}$, we can prove $\forall x \in \{x \in \Z \mid (21 \mid x)\}, x \in \{x \in  \Z \mid (7 \mid x)\}$, or $\forall x \in \Z, 21 \mid x \Rightarrow x \in \{x \in  \Z \mid (7 \mid x)\}$, or $\forall x \in \Z, 21 \mid x \Rightarrow 7 \mid x$.
+\begin{flalign}
+    & 21 \mid x & \text{Assumption} & \\
+    & \exists k \in \Z, x = 21k & \text{Definition of $\mid$ (1)} & \\
+    & x = 7(3)k & \text{Factoring (2)} \\
+    & 3k \in \Z & \text{$\Z$ closed over multiplication} \\
+    & 7 \mid x & \text{Definition of $\mid$ (3, 4)}
+\end{flalign}
+\setcounter{equation}{0}
+Since $\forall x \in \Z, 21 \mid x \Rightarrow 7 \mid x$, the original statement is also true.
+
+\pagebreak
+
+
+\question{Suppose that $A, B$ and $C$ are sets. Is $A \cap (B \cup C) \subseteq (A \cap B) \cup C$ true? Prove or disprove the statement.}{14}
+\bigskip
+\bigskip
+\textbf{Answer:}
+
+Need to prove or disprove $A \cap (B \cup C) \subseteq (A \cap B) \cup C$, which is logically equivalent to $\forall x \in A \cap (B \cup C), x \in (A \cap B) \cup C$.
+\begin{flalign}
+    & x \in A \cap (B \cup C) & \text{Assumption} & \\
+    & x \in A \land x \in B \cup C & \text{Definition of $\cap$ (1)} \\
+    & x \in A & \text{Specialization (2)} \\
+    & x \in B \cup C & \text{Specialization (2)} \\
+    & x \in B \lor x \in C & \text{Definition of $\cup$ (4)}
+\end{flalign}
+
+Case 1: $x \in B$
+\begin{flalign}
+    & x \in B & \text{Assumption} & \\
+    & x \in A \land x \in B & \text{Conjunction (3, 6)} \\
+    & x \in A \cap B & \text{Definition of $\cap$} \\
+    & x \in A \cap B \lor x \in C & \text{Generalization (8)} \\
+    & x \in (A \cap B) \cup C & \text{Definition of $\cup$}
+\end{flalign}
+
+Case 2: $x \not\in B$
+\begin{flalign}
+    & x \not\in B & \text{Assumption} & \\
+    & x \in C & \text{Elimination (11, 5)} & \\
+    & x \in (A \cap B) \lor x \in C & \text{Generalization (12)} \\
+    & x \in (A \cap B) \cup C & \text{Definition of $\cup$}
+\end{flalign}
+
+In both cases, $x \in (A \cap B) \cup C$. This proves that $\forall x \in A \cap (B \cup C), x \in (A \cap B) \cup C$, which means the original statement is true.
+
+\pagebreak
+
+\question{Suppose that $A$ and $B$ are sets. Is $A - B = \emptyset \Rightarrow A \cap B^c = \emptyset$ true? Prove or disprove the statement without using Set Identities.}{14}
+\bigskip
+\bigskip
+\textbf{Answer:}
+
+Take sets $A$ and $B$.
+\setcounter{equation}{0}
+\begin{flalign}
+    & A - B = \varnothing & \text{Assumption} & \\
+    & A - B \subseteq \varnothing \land \varnothing \subseteq A - B & \text{Double containment} \\
+    & A - B \subseteq \varnothing & \text{Specialization (2)} \\
+    & \varnothing \subseteq A - B & \text{Specialization (2)}
+\end{flalign}
+
+\textbf{Proving $A \cap B^c \subseteq \varnothing$}:
+
+Take an $x \in A \cap B^c$.
+\begin{flalign}
+    & x \in A \cap B^c & \text{Assumption} & \\
+    & x \in A \land x \in B^c & \text{Definition of $\cap$ (5)} \\
+    & x \in A & \text{Specialization (6)} \\
+    & x \in B^c & \text{Specialization (6)} \\
+    & x \not\in B & \text{Definition of complement (8)} \\
+    & x \in A \land x \not\in B & \text{Conjunction (7, 9)} \\
+    & x \in A - B & \text{Definition of set difference (10)} \\
+    & x \in \varnothing & \text{Definition of $\subseteq$ (3, 11)}
+\end{flalign}
+Therefore, $\forall x \in A \cap B^c, x \in \varnothing$. This means that $A \cap B^c \subseteq \varnothing$.\\
+\,\\
+\textbf{Proving $\varnothing \subseteq A \cap B^c$}
+
+Take an $x \in \varnothing$
+\begin{flalign}
+    & x \in \varnothing & \text{Assumption} & \\
+    & x \in A - B & \text{Definition of $\subseteq$ (4, 13)} \\
+    & x \in A \land x \not\in B & \text{Definition of set difference (14)} \\
+    & x \in A & \text{Specialization (15)} \\
+    & x \not\in B & \text{Specialization (15)} \\
+    & x \in B^c & \text{Definition of complement (17)} \\
+    & x \in A \land x \in B^c & \text{Conjunction (16, 18)} \\
+    & x \in A \cap B^c & \text{Definition of $\cap$ (19)}
+\end{flalign}
+Therefore, $\forall x \in \varnothing, x \in A \cap B^c$. This means that $\varnothing \subseteq A \cap B^c$.\\
+\,\\
+Since $\varnothing \subseteq A \cap B^c$ and $A \cap B^c \subseteq \varnothing$, $A \cap B^c = \varnothing$.\\
+\,\\
+Therefore, $A - B = \varnothing \Rightarrow A \cap B^c = \varnothing$
+
+\pagebreak
+
+
+
+\problem{Set builder}{30}
+
+Write the following sets in any of the accepted set notation we defined for this class.
+
+\bigskip
+\bigskip
+
+\question{The set of all reals that are powers of three.}{6}
+
+$\{x \in \mathbb{R} \mid \exists k \in \mathbb{Z}, 3^k = x\}$
+
+\bigskip
+\bigskip
+
+\question{The set of all non-negative integers that are divisible by $4$ but are not a factor of 40!.}{6}
+
+$\{x \in \mathbb{Z}^{\geq 0} \mid (4 \mid x) \land (x \nmid 40!)\}$
+
+\bigskip
+\bigskip
+
+\question{The set of all points in 2D space (defined by a ordered pair) that are on the unit circle (a circle with radius 1) that are centered at the origin in the 2D Cartesian coordinate system.}{6}
+
+$\{(x, y) \in \mathbb{R}^2 \mid x^2 + y^2 = 1\}$
+
+\bigskip
+\bigskip
+
+\question{The set of all negative rationals such that their numerators are multiples of $2$ and denominators are multiples of $3$.}{6}
+
+$\{\frac p q \in \mathbb{Q}^{< 0} \mid (2 \mid p) \land (3 \mid q)\}$
+
+\bigskip
+\bigskip
+
+\question{The set that contains all rationals whose square root are irrational, and all integers whose powers are equivalent to $1$ in the mod $4$ class.}{6}
+
+$\{x \in \mathbb{Q} \mid (\sqrt{x} \in \mathbb{R} - \mathbb{Q}) \lor (x \in \mathbb{Z} \land x \equiv 1 \pmod{4})\}$
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+

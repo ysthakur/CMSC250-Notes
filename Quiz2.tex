@@ -1,0 +1,147 @@
+\documentclass[12pt, leqno]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+% Line before the therefore in proofs
+\newcommand{\proofline}{\rule{0.75in}{0.5pt}}
+% For set literals, wraps in {}
+\newcommand{\set}[1]{\{#1\}}
+% Powerset symbol
+\newcommand{\powerset}{\mathcal{P}}
+% Cardinality
+\newcommand{\card}[1]{\lvert #1 \rvert}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\evens}{\Z^{\mathrm{even}}}
+\newcommand{\odds}{\Z^{\mathrm{odd}}}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\title{Quiz 2}
+\author{Yash Thakur}
+\date{October 10, 2022}
+
+\begin{document}
+\counterwithout{equation}{section}
+
+\section*{Problem 1: Proofs}
+
+Prove using a direct proof:
+
+\begin{center}
+    $\forall a, b, c, d, m \in \Z, (m \geq 2 \land a \equiv b \pmod{m} \land c \equiv d \pmod{m}) \Rightarrow (a + c \equiv d + b \pmod{m})$
+\end{center}
+
+\begin{flalign}
+    & m \geq 2 \land a \equiv b \Mod{m} \land c \equiv d \Mod{m} & \text{Assumption} & \\
+    & m \geq 2 & \text{Specialization (1)} & \\
+    & a \equiv b \Mod{m} & \text{Specialization (1)} & \\
+    & c \equiv d \Mod{m} & \text{Specialization (1)} & \\
+    & m \mid (a - b) & \text{Def. of modular equivalence (3)} \\
+    & m \mid (c - d) & \text{Def. of modular equivalence (4)} \\
+    & \exists k \in \Z, a - b = mk & \text{Definition of $\mid$ (5)} \\
+    & \exists j \in \Z, c - d = mj & \text{Definition of $\mid$ (6)} \\
+    & a = mk + b & \text{Arithmetic (7)} \\
+    & c = mj + d & \text{Arithmetic (8)} \\
+    & a + c = mk + b + mj + d & \text{Substitution (9, 10)} \\
+    & (a + c) - (d + b) = m(k + j) & \text{Arithmetic (11)} \\
+    & k + j \in \Z & \text{$\Z$ closed under addition} \\
+    & m \mid (a + c) - (d + b) & \text{Definition of $\mid$ (12, 13)} \\
+    & a + c \equiv d + b \Mod{m} & \text{Def. of modular equivalence (14)}
+\end{flalign}
+\setcounter{equation}{0}
+
+\pagebreak
+
+\section*{Problem 2: Proofs}
+
+Prove using either a proof by contradiction or a proof by contrapositive:
+
+\begin{center}
+    $\forall x \in \Z, x \equiv 5 \pmod{2} \Rightarrow x + 1 \in \evens$
+\end{center}
+
+This can be done using a proof by contrapositive. The contrapositive of the statement above is $\forall x \in \Z, x + 1 \in \odds \Rightarrow x \not\equiv 5 \pmod{2}$.
+\begin{flalign}
+    & x + 1 \in \odds & \text{Assumption} & \\
+    & \exists k \in \Z, x + 1 = 2k + 1 & \text{Definition of even (1)} & \\
+    & (x + 1) - 5 = 2k + 1 - 5 & \text{Arithmetic (2)} \\
+    & x - 5 = 2k - 5 & \text{Arithmetic (3)} \\
+    & x - 5 = 2(k - 3) + 1 & \text{Factoring (4)} \\
+    & k - 3 \in \Z & \text{$\Z$ closed under addition} \\
+    & x - 5 \in \odds & \text{Definition of odd (5, 6)} \\
+    & x - 5 \not\in \evens & \text{Parity (7)} \\
+    & 2 \nmid x - 5 & \text{Definition of $\evens$ (8)} \\
+    & x \not\equiv 5 \Mod{2} & \text{Definition of modular equivalence (9)}
+\end{flalign}
+\setcounter{equation}{0}
+Since the contrapositive is true, the original statement is also true.
+
+\pagebreak
+
+\section*{Problem 3: Proofs}
+
+Prove using any of the 3 proof types we have talked about
+
+\begin{center}
+    $\forall x \in \Z, 4 \mid (x^2 - 6x)(x^2 + 3)$
+\end{center}
+
+This can be done with a direct proof using two cases based on $x$'s parity.
+
+\textbf{Case 1:} $x \in \odds$
+\begin{flalign}
+    & \exists k \in \Z, x = 2k + 1 & x \in \odds & \\
+    & x^2 + 3 = (2k + 1)^2 + 3 & \text{Substitution (1)} \\
+    & x^2 + 3 = 4k^2 + 4k + 4 & \text{Arithmetic (2)} \\
+    & x^2 + 3 = 4(k^2 + k + 1) & \text{Factoring (3)} \\
+    & (x^2 - 6x)(x^2 + 3) = 4(x^2 - 6x)(k^2 + k + 1) & \text{Substitution (4)} & \\
+    & (x^2 - 6x)(k^2 + k + 1) \in \Z & \text{$\Z$ closed under $+$ and $\cdot$} & \\
+    & 4 \mid (x^2 - 6x)(x^2 + 3) & \text{Definition of $\mid$ (5, 6)}
+\end{flalign}
+\setcounter{equation}{0}
+
+\textbf{Case 2}: $x \in \evens$
+\begin{flalign}
+    & \exists k \in \Z, x = 2k & x \in \evens & \\
+    & x^2 - 6x = (2k)^2 - 6(2k) & \text{Substitution (1)} \\
+    & x^2 - 6x = 4k^2 - 12k & \text{Arithmetic (2)} \\
+    & x^2 - 6x = 4(k^2 - 3k) & \text{Factoring (3)} \\
+    & (x^2 - 6x)(x^2 + 3) = 4(k^2 - 3k)(x^2 + 3) & \text{Substitution (4)} & \\
+    & (k^2 - 3k)(x^2 + 3) \in \Z & \text{$\Z$ closed under $+$ and $\cdot$} & \\
+    & 4 \mid (x^2 - 6x)(x^2 + 3) & \text{Definition of $\mid$ (5, 6)}
+\end{flalign}
+\setcounter{equation}{0}
+
+In both cases, one can conclude that $4 \mid (x^2 - 6x)(x^2 + 3)$. Therefore, the statement holds for all integers.
+
+\pagebreak
+
+\section*{Problem 4: Proofs}
+
+Prove using any of the 3 proof types we have talked about
+
+\begin{center}
+    Assuming that $\sqrt 6$ is irrational, prove that $\sqrt 2 + \sqrt 3$ is also irrational.
+\end{center}
+
+This can be done using a proof by contradiction. Assume that $\sqrt 2 + \sqrt 3 \in \Q$.
+\begin{flalign}
+    & \sqrt 6 \not\in \Q & \text{Assumption} & \\
+    & \sqrt 2 + \sqrt 3 \in \Q & \text{Assumption} & \\
+    & \sqrt 2, \sqrt 3 \in \Q & \text{$\Q$ closed under addition (2)} \\
+    & \exists p, q \in \Z, \frac p q = \sqrt 2 & \text{Definition of $\Q$} \\
+    & \exists r, s \in \Z, \frac r s = \sqrt 3 & \text{Definition of $\Q$} \\
+    & \sqrt 6 = \sqrt{2 \cdot 3} & \text{Arithmetic (1)} \\
+    & \sqrt 6 = \sqrt 2 \sqrt 3 & \text{Arithmetic (7)} \\
+    & \sqrt 6 = \frac p q \cdot \frac r s & \text{Substitution (8, 4, 5)} \\
+    & pr \in \Z & \text{$\Z$ closed under multiplication} \\
+    & qs \in \Z & \text{$\Z$ closed under multiplication} \\
+    & \sqrt 6 \in \Q & \text{Definition of $\Q$ (8, 9, 10)} \\
+    & \sqrt 6 \in \Q \land \sqrt 6 \not\in \Q & \text{Conjunction (1, 11)}
+\end{flalign}
+This produces a contradiction. Therefore, it is not true that $\sqrt 2 + \sqrt 3 \in \Q$, i.e. $\sqrt 2 + \sqrt 3$ is irrational.
+
+\end{document}

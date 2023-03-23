@@ -1,0 +1,406 @@
+\documentclass{article}
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\textwidth}{6in}
+\setlength{\topmargin}{-0.1in}
+\setlength{\textheight}{8.2in}
+
+%%%%%%%%%%%%%  IMPORT MACRO FILES AS NEEDED %%%%%%%%%%%
+\usepackage{amsgen,amsmath,amstext,amsbsy,amsopn,amssymb,amsthm,stackengine}
+\usepackage{array, nicefrac, mathtools}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{float,relsize,setspace,enumitem,pbox,cleveref,multicol,multirow}
+\usepackage{multido}
+\usepackage{bbding} % Has a checkmark symbol reachable through \Checkmark
+\usepackage{tikz,mdframed}
+% \usepackage{circuitikz}
+
+% Theorems, definitions, equations, lemmas
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{defn}{Definition}
+\newtheorem{rem}[thm]{Remark}
+\numberwithin{equation}{section}
+\newtheorem*{defn*}{Definition} % Theorem environments with no numbering
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{thm*}{Theorem}
+\theoremstyle{definition}
+\newtheorem*{fact}{Fact}
+
+% For negation and quantifiers in Discrete Math
+\newcommand{\shortsim}{\raise.17ex\hbox{$\scriptstyle \sim$}}
+\renewcommand{\neg}{\shortsim}
+\renewcommand{\nexists}{\neg(\exists}
+\newcommand{\nequiv}{\ensuremath{\not\equiv}}
+
+\newcommand{\myline}[1]{\underline{\hspace{#1}}}
+\newcounter{parts}
+\newcounter{problems}[parts]
+\newcounter{questions}[problems]
+\newcounter{subquestions}[questions]
+\newcommand{\hwpart}[1]{
+  \stepcounter{parts}
+  \noindent\makebox[\textwidth]{\LARGE \bf Part \arabic{parts} - #1}
+  \\
+}
+\newcommand{\problem}[2]{\stepcounter{problems}
+  {\Large \bf \noindent Problem \arabic{problems}: #1 \marginpar{[Total #2 pts]} \\[0.3cm]}}
+\newcommand{\question}[2]{\stepcounter{questions}
+  {\large (\alph{questions}) #1 \marginpar{[#2 pts]} \\[.3cm]}}
+\newcommand{\subquestion}[2]{\stepcounter{subquestions}
+  {\hspace{10pt}\emph{(\roman{subquestions}) #1 \marginpar{[#2 pts]} }\\[.3cm]}}
+
+% Solution formatting
+\newcommand{\solution}[1]{{\color{red}{#1}}}
+% Some standard centering and italicization of text.
+\newcommand{\frontrowcenter}[1]{\begin{center}{\em \Large  #1  }\end{center}}
+
+% A blank page
+\newcommand{\blankpage}{
+\clearpage
+\vspace*{\fill}
+\begin{minipage}{\textwidth}
+  \Large \textbf{THIS PAGE INTENTIONALLY LEFT BLANK}\\
+\end{minipage}
+\vfill % equivalent to \vspace{\fill}
+\clearpage
+}
+
+\newcommand{\answerspace}[1]{
+  \begin{center}
+    \textbf{BEGIN YOUR ANSWER BELOW THIS LINE} \\ \hrulefill \vspace{#1} \\ \hrulefill
+  \end{center}
+}
+
+\newcommand{\answerspacefullpage}{
+  \begin{center}
+    \textbf{BEGIN YOUR ANSWER BELOW THIS LINE} \\ \hrulefill \pagebreak
+  \end{center}
+}
+
+\newcommand{\additionalanswerspace}[1]{
+  \begin{center}
+    \textbf{CONTINUE YOUR ANSWER BELOW THIS LINE } \\ \hrulefill \vspace{#1} \\ \hrulefill
+  \end{center}
+}
+
+\newcommand{\additionalanswerspacefullpage}{
+  \begin{center}
+    \textbf{CONTINUE YOUR ANSWER BELOW THIS LINE} \\ \hrulefill \pagebreak
+  \end{center}
+}
+
+\newcommand{\freespace}[1]{
+  \begin{center}
+    \large \textbf{SCRAP SPACE BELOW} \\
+    \hrulefill
+    \pagebreak
+  \end{center}
+}
+
+% Centered line
+\newcommand{\mycenterline}[1]{
+  \begin{center}
+    \myline{#1}
+  \end{center}
+}
+
+% Space for T/F:
+\newcommand{\tfline}{\myline{.5cm}}
+
+% For quick parenthesized and italicized point annotation.
+\newcommand{\pts}[1]{{\em (#1 pts)}}
+\newcommand{\onept}{{\em (1 pt)}}
+
+% \item environments coupled with a line at the end, for students to write T and F in.
+\newcommand{\tfitem}[1]{\item #1 \null\hfill \framebox(25,25){} \\ \hdashrule{0.95\textwidth}{1pt}{2pt}}
+\newcommand{\setitem}[1]{\tfitem{$\curlybraces{#1}$} }
+\newcommand{\lineitem}[2]{\item #1 \null \hfill \myline{#2}}
+
+% Some circles and squares for students to fill in.
+\newcommand{\whitecircle}[1]{\tikz[baseline=-0.5ex]\draw[black, radius=#1] (0,0) circle ;}
+\newcommand{\whitesquare}[1]{\tikz\draw[black] (0,0) rectangl#1, #1) ;}
+
+% Emphasis
+\newcommand{\F}{$\mathbf{F}$}
+\newcommand{\T}{$\mathbf{T}$}
+\newcommand{\False}{\textbf{False}}
+\newcommand{\false}{\textbf{false}}
+\newcommand{\True}{\textbf{True}}
+\newcommand{\true}{\textbf{true}}
+\newcommand{\makered}[1]{\textcolor{red}{#1}}
+\newcommand{\Rbbst}{\textcolor{red}{Red}-black tree}
+\newcommand{\rbbst}{\textcolor{red}{red}-black tree}
+
+\newcommand{\homeworkdata}[4]{
+  \begin{mdframed}[linewidth=1pt]
+    \noindent\makebox[\textwidth]{\LARGE \bf #1, #2 }
+    \\\\
+    \noindent\makebox[\textwidth]{\Large \bf  Homework \##3 }
+    \\\\
+    \noindent\makebox[\textwidth]{\large \bf  Due: #4}
+    \\\\
+    \noindent\makebox[\textwidth]{\large \bf Homework will not be accepted late}
+  \end{mdframed}
+  \vspace{40pt}
+}
+
+\usepackage{circuitikz}
+
+\setlength{\parindent}{0em}
+\setlength{\itemindent}{.5in}
+
+\newcommand{\poneanswer}{%
+}
+\newcommand{\ptwoanswer}{%
+}
+\newcommand{\pthreeanswer}{%
+}
+\newcommand{\pfouranswer}{%
+}
+\newcommand{\pfiveanswer}{%
+}
+\newcommand{\psixanswer}{%
+}
+% \include{solutions}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  STUDENTS - Your homework begins here.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\pagestyle{empty}
+
+\homeworkdata{CMSC 250}{Fall 2022}{1}{Sunday 11 Sept.\ 11:59pm}
+
+{\Large \bf
+  \begin{center}
+  IMPORTANT
+  \end{center}
+
+  You can write your answers on any paper, either this paper
+  or blank paper, or write your answer in Latex (template of this homework can be downloaded through ELMS).
+  
+  When you upload your document to Gradescope, make sure you tag your questions.
+
+  \begin{center}
+    YOU WILL NEED TO TAG YOUR PROBLEMS!!!
+  \end{center}
+
+  For homework 1, problems that are not tagged will receive a 20\% penalty. For later homework, problems which are not correctly found will not be graded, this is a zero-tolerance policy. 
+
+  \begin{center}
+    IF YOU ARE WORRIED...
+  \end{center}
+
+  If you have concerns about tagging your problems,
+  homework 0 is designed for testing how to tag. For example if you've never done it before, we strongly suggest you drop by office hours and do it with a TA present so they can help you through the process,
+  just to see how it works. In addition, Gradescope has a tutorial: \url{https://help.gradescope.com/article/ccbpppziu9-student-submit-work#submitting_a_pdf}
+
+
+}
+
+\pagebreak
+\pagebreak
+
+\problem{Statement}{20}%
+For each of the following English sentences, determine whether it is a logical statement. If it is not a statement, you must give a brief explanation.
+
+\bigskip
+\question{\textit{there is free food every Monday in 2010.}}{5}%
+\bigskip
+\textbf{Answer: True}\\\\
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+\question{\textit{The moon tonight is beautiful.}}{5}%
+
+\bigskip
+\textbf{Answer: False}\\\\
+\textbf{Explanation if this is not a statement:\\\\
+It's subjective, you can't say that it's true or false}
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+\question{\textit{Now, this wall is pink.}}{5}%
+
+\bigskip
+\textbf{Answer: True}\\\\
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+\question{\textit{ Life in the world is but a big dream;\\
+ I will not spoil it by any labour or care.}}{5}%
+
+\bigskip
+\textbf{Answer: False}\\\\
+\textbf{Explanation if this is not a statement:\\\\
+The second part seems to be a statement but the first part is not a statement, it's an opinion.}
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+\poneanswer
+
+\pagebreak
+
+
+
+\problem{Converting Logic and English}{30}%
+
+English can be more ambiguous than mathematics, so we’ll take the ambiguity into account when grading these questions.
+\bigskip
+
+\question{Logic to English}{15}
+Use the following logical symbols:\\
+
+\begin{itemize}
+    \item $p$ = Apples are red.
+    
+    \item $q$ = The sky is blue.
+
+    \item $r$ = Cliff is happy.
+\end{itemize}
+Translate each propositional logic expression into an English sentence, do not simplify:\\
+\begin{enumerate}[label = (\alph*)]
+	\item $p \land q$: Apples are red and the sky is blue.
+	\item $\neg(p \lor r)$: It is not true that apples are red or that Cliff is happy.
+	\item $r \land ( p \lor q)$: Cliff is happy and it is true that apples are red or that the sky is blue.\\
+
+\end{enumerate}
+
+\question{English to logic}{15}
+Use the following logical symbols:\\
+
+\begin{itemize}
+    \item $p$ = Apples are red.
+    
+    \item $q$ = The sky is blue.
+
+    \item $r$ = Cliff is happy.
+\end{itemize}
+Translate each English sentence into a propositional logic expression. Note that the
+truth value of the statement is irrelevant - we want the direct translation, no matter whether
+the statement is true or false:\\
+\begin{enumerate}[label = (\alph*)]
+	\item If apples are red, then the sky is blue.: $p \to q$
+	\item Cliff is happy if apples are red and the sky is blue.: $(p \land q) \to r$
+	\item Cliff is not happy if and only if apples are not red: $\lnot r \Leftrightarrow \lnot p$\\
+\end{enumerate}
+
+\ptwoanswer
+
+\pagebreak
+
+\problem{Truth Table}{10}%
+\question{\textit{Fill in the truth table for $r \land (\neg(\neg p \land q))$}}{4}.
+\begin{center}
+	\begin{table}[H] 
+		\large 
+		\setlength{\tabcolsep}{15pt}
+%		\renewcommand{\arraystretch}{1.2}
+		\begin{tabular}{c|c|c|c|c|c|c|c|} \hline 
+		0.&	$p$ & $q$ & $r$ & $\neg p$ & $(\neg p \land q)$  & $\neg(\neg p \land q)$ & $r \land (\neg(\neg p \land q))$\\ \hline
+		1.&	0 & 0 & 0 & 1 & 0 & 1 & 0 \\ \hline 		
+		2.&	0 & 0 & 1 & 1 & 0 & 1 & 1 \\ \hline 		
+		3.&	0 & 1 & 0 & 1 & 1 & 0 & 0 \\ \hline 		
+		4.&	0 & 1 & 1 & 1 & 1 & 0 & 0 \\ \hline
+		5.&	1 & 0 & 0 & 0 & 0 & 1 & 0 \\ \hline 		
+		6.&	1 & 0 & 1 & 0 & 0 & 1 & 1 \\ \hline
+		7.&	1 & 1 & 0 & 0 & 0 & 1 & 0 \\ \hline 		
+		8.&	1 & 1 & 1 & 0 & 0 & 1 & 1 \\ \hline												
+		\end{tabular}
+	\end{table}
+\end{center}
+
+
+\question{\textit{Which rows make the statement false?}}{3}%
+\textbf{Answer: 1, 3, 4, 5, 7}
+
+\bigskip
+
+\question{\textit{Which rows make the statement true?}}{3}%
+\textbf{Answer: 2, 6, 8}
+
+\pthreeanswer
+
+\pagebreak
+
+\problem{Converse, Inverse, Contrapositive}{25}
+
+\question{Write the converse, inverse and contrapositive for the following statement. Then state whether each statement must be true or not and why.}{15}
+\begin{center}
+If I jump into the lake, I will get wet. 
+\end{center}
+\textbf{Converse: If I get wet, I will have jumped into the lake.}\\
+
+\bigskip
+\bigskip
+
+\textbf{Inverse: If I don't jump into the lake, I won't get wet.}\\
+
+\bigskip
+\bigskip
+
+\textbf{Contrapositive: If I don't get wet, I will not have jumped into the lake.}\\
+
+\bigskip
+\bigskip
+    
+\question{Now come up with a statement in the form $p \Rightarrow q$ whose converse, inverse and contrapositive are all true statements, and $p, q$ are two different statements.}{10}
+\textbf{Answer: If an integer is even, it is not odd.}
+%
+\pfouranswer
+
+\pagebreak
+
+\problem{Necessary and Sufficient}{15}%
+What are the necessary and sufficient conditions of "apples are red" in these statements? If there is no necessary or sufficient condition, specify which one(s) the statement is missing.
+
+\question{\textit{If apples are red, then the sky is blue.}}{5}%
+\textbf{Answer: The sky being blue is a necessary condition for apples being red. There is no sufficient condition, though.}
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+\question{\textit{Cliff is not happy if and only if apples are red}}{5}%
+\textbf{Answer: Cliff not being happy is both necessary and sufficient for apples being red.}
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+\question{\textit{Apples are red only if the sky is blue.}}{5}%
+\textbf{Answer: The sky being blue is necessary for apples being red. There is no sufficient condition, though.}
+
+\bigskip
+\pfiveanswer
+
+\pagebreak
+
+
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+
